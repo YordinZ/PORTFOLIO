@@ -156,8 +156,11 @@ const Hero = () => {
 
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               <a
-                href={`${import.meta.env.BASE_URL}assets/Yordin_Herrera_CV.pdf`}
-                download
+                href={new URL(
+                  'assets/Yordin_Herrera_CV.pdf',
+                  import.meta.env.BASE_URL
+                ).toString()}
+                download="Yordin_Herrera_CV.pdf"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-semibold hover:bg-white/90 hover:shadow-xl hover:shadow-white/20 hover:scale-105 transition-all"
               >
                 <Download size={20} className="group-hover:animate-bounce" />
