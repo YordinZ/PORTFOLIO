@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-black text-white antialiased;
+  }
+
+  html {
+    @apply overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===========================
+     SPIRAL (estático por defecto)
+     =========================== */
+
+  .spiral-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0.9;
+  }
+
+  /* ESTE ERA EL PUNTO CLAVE: estático por defecto */
+  .spiral {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    animation: none; /* ✅ no rota si no hay zoom */
+    will-change: transform;
+  }
+
+  /* El "zoom" real usando tu variable --spiral-scale */
+  .spiral-zoom {
+    transform: scale(var(--spiral-scale, 1));
+    transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  .spiral-1 {
+    width: 1200px;
+    height: 1200px;
+    border-image: linear-gradient(
+      45deg,
+      rgba(34, 211, 238, 0.16),
+      transparent 50%,
+      rgba(232, 121, 249, 0.16)
+    ) 1;
+  }
+
+  .spiral-2 {
+    width: 1600px;
+    height: 1600px;
+    border-image: linear-gradient(
+      135deg,
+      rgba(232, 121, 249, 0.12),
+      transparent 50%,
+      rgba(34, 211, 238, 0.12)
+    ) 1;
+  }
+
+  .spiral-3 {
+    width: 2000px;
+    height: 2000px;
+    border-image: linear-gradient(
+      225deg,
+      rgba(34, 211, 238, 0.1),
+      transparent 50%,
+      rgba(232, 121, 249, 0.1)
+    ) 1;
+  }
+
+  /* Solo cuando está en modo zoom: habilita rotación */
+  .skills--zoomed .spiral {
+    animation: rotate-spiral linear infinite;
+  }
+
+  .skills--zoomed .spiral-1 { animation-duration: 30s; }
+  .skills--zoomed .spiral-2 { animation-duration: 45s; animation-direction: reverse; }
+  .skills--zoomed .spiral-3 { animation-duration: 60s; }
+
+  @keyframes rotate-spiral {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ===========================
+     PARTICLES
+     =========================== */
+
+  @keyframes float-particle {
+    0% { transform: translateY(0); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+  }
+
+  .animate-float-particle {
+    animation: float-particle 10s infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spiral {
+    animation: none !important;
+  }
+
+  .spiral-zoom {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .animate-float-particle {
+    animation: none !important;
+  }
+}
+
+.orbital-system {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  will-change: transform;
+}
+
+#skills {
+  overscroll-behavior: contain;
+}
+
+/* Scrollbar base (global) */
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  border: 2px solid rgba(0, 0, 0, 0.6);
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.26);
+}
+
+/* Firefox fallback */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) rgba(255, 255, 255, 0.04);
+}
+
+/* When Skills is active (>55% visible) */
+html.skills-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgb(34, 211, 238), rgb(232, 121, 249));
+  box-shadow:
+    0 0 10px rgba(34, 211, 238, 0.25),
+    0 0 14px rgba(232, 121, 249, 0.22);
+}
+
+html.skills-scrollbar::-webkit-scrollbar-thumb:hover {
+  box-shadow:
+    0 0 14px rgba(34, 211, 238, 0.35),
+    0 0 18px rgba(232, 121, 249, 0.30);
+}
+
+/* Firefox (no gradient support in scrollbar-color) */
+html.skills-scrollbar {
+  scrollbar-color: rgb(34, 211, 238) rgba(255, 255, 255, 0.04);
+}
+
+.skills-scroll-hint {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
