@@ -100,8 +100,8 @@ const Hero = () => {
             <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-fuchsia-600 rounded-full blur-2xl opacity-50 group-hover:opacity-75 transition-opacity animate-pulse" />
             <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl">
               <img
-                src="/image.jpg"
-                alt="Yordin Herrera"
+                src={`${import.meta.env.BASE_URL}assets/image.jpg`}
+                alt="Profile"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
             </div>
