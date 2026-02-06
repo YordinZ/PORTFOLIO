@@ -156,7 +156,7 @@ const Hero = () => {
 
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
               <a
-                href="/assets/Yordin_Herrera_CV.pdf"
+                href={`${import.meta.env.BASE_URL}assets/Yordin_Herrera_CV.pdf`}
                 download
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-semibold hover:bg-white/90 hover:shadow-xl hover:shadow-white/20 hover:scale-105 transition-all"
               >
