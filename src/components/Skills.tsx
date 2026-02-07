@@ -54,9 +54,32 @@ const categories = [
   { id: "Viz", label: "VIZ" },
 ] as const;
 
-const orbitRadii = { 1: 100, 2: 180, 3: 270 };
-
 export default function Skills() {
+  // ✅ Un solo systemRef (no lo dupliques en el JSX)
+  const systemRef = useRef<HTMLDivElement | null>(null);
+  const [systemSize, setSystemSize] = useState(700);
+
+  useEffect(() => {
+    const el = systemRef.current;
+    if (!el) return;
+
+    const ro = new ResizeObserver(() => {
+      const rect = el.getBoundingClientRect();
+      setSystemSize(Math.min(rect.width, rect.height));
+    });
+
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // ✅ orbitRadii dentro del componente (hook OK)
+  const orbitRadii = useMemo(() => {
+    const r1 = systemSize * 0.16;
+    const r2 = systemSize * 0.28;
+    const r3 = systemSize * 0.40;
+    return { 1: r1, 2: r2, 3: r3 } as const;
+  }, [systemSize]);
+
   const [isSkillsActive, setIsSkillsActive] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
   const spiralRef = useRef<HTMLDivElement | null>(null);
@@ -70,7 +93,6 @@ export default function Skills() {
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
   const [activeCategory, setActiveCategory] =
     useState<(typeof categories)[number]["id"]>("all");
-
 
   const progress = useMotionValue(0);
 
@@ -106,7 +128,7 @@ export default function Skills() {
       };
     });
   }, []);
-  
+
   /**
    * Wheel logic:
    * - El scroll SOLO controla zoom
@@ -125,7 +147,6 @@ export default function Skills() {
     const animateProgress = (to: number, ms: number, onComplete?: () => void) => {
       animatingRef.current = true;
 
-      // espiral solo gira en zoom (clase en la section)
       section.classList.toggle("skills--zoomed", to >= 0.999);
 
       controlsRef.current?.stop();
@@ -139,27 +160,21 @@ export default function Skills() {
       });
     };
 
-    // define cuándo Skills está "activo"
     const io = new IntersectionObserver(
       ([entry]) => {
-        const active =
-          entry.isIntersecting && entry.intersectionRatio >= 0.55;
+        const active = entry.isIntersecting && entry.intersectionRatio >= 0.55;
 
         inSkillsRef.current = active;
         setIsSkillsActive(active);
 
-        // Scrollbar highlight
-        document.documentElement.classList.toggle(
-          "skills-scrollbar",
-          active
-        );
+        document.documentElement.classList.toggle("skills-scrollbar", active);
       },
       { threshold: [0, 0.55, 0.9] }
     );
     io.observe(section);
 
     const handleWheel = (e: WheelEvent) => {
-      if (!inSkillsRef.current) return; // no tocar scroll global
+      if (!inSkillsRef.current) return;
 
       if (animatingRef.current) {
         e.preventDefault();
@@ -169,10 +184,9 @@ export default function Skills() {
 
       const dir = Math.sign(e.deltaY);
 
-      // Scroll hacia arriba = Zoom IN
+      // Scroll ↑ = Zoom IN
       if (dir < 0) {
-        if (isZoomedRef.current) return; // ya está en zoom
-
+        if (isZoomedRef.current) return;
         e.preventDefault();
         e.stopPropagation();
         isZoomedRef.current = true;
@@ -180,10 +194,9 @@ export default function Skills() {
         return;
       }
 
-      // Scroll hacia abajo = Zoom OUT (de-zoom)
+      // Scroll ↓ = Zoom OUT
       if (dir > 0) {
-        if (!isZoomedRef.current) return; // ya está sin zoom, deja pasar scroll
-
+        if (!isZoomedRef.current) return;
         e.preventDefault();
         e.stopPropagation();
         isZoomedRef.current = false;
@@ -197,7 +210,6 @@ export default function Skills() {
       capture: true,
     });
 
-    // init
     progress.set(ZOOM_OUT);
     isZoomedRef.current = false;
     section.classList.remove("skills--zoomed");
@@ -205,7 +217,6 @@ export default function Skills() {
     return () => {
       io.disconnect();
       setIsSkillsActive(false);
-      // 🔹 Quitar el highlight del scrollbar al salir de Skills
       document.documentElement.classList.remove("skills-scrollbar");
 
       window.removeEventListener("wheel", handleWheel, true);
@@ -240,7 +251,8 @@ export default function Skills() {
     <section
       ref={sectionRef}
       id="skills"
-      className="relative min-h-screen py-12 pt-40 overflow-hidden"
+      // ✅ mejor para viewport real, evita scroll horizontal raro
+      className="relative min-h-[100svh] py-12 pt-24 overflow-x-clip overflow-y-visible"
       style={{
         background: `
           linear-gradient(
@@ -253,6 +265,7 @@ export default function Skills() {
         `,
       }}
     >
+      {/* Background spiral */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="spiral-container">
           <div ref={spiralRef} className="spiral-zoom">
@@ -263,6 +276,7 @@ export default function Skills() {
         </div>
       </div>
 
+      {/* Neon lines */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute w-full h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent top-1/4 animate-pulse" />
         <div
@@ -271,6 +285,7 @@ export default function Skills() {
         />
       </div>
 
+      {/* Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {particles.map((p) => (
           <div
@@ -288,6 +303,7 @@ export default function Skills() {
         ))}
       </div>
 
+      {/* Header UI */}
       <motion.div
         style={{ opacity: uiOpacity, y: uiY }}
         className="relative z-10 container mx-auto px-4"
@@ -311,9 +327,10 @@ export default function Skills() {
                 className={`
                   px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300
                   backdrop-blur-sm border
-                  ${activeCategory === cat.id
-                    ? "bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 border-cyan-500/50 text-white shadow-lg shadow-cyan-500/20"
-                    : "bg-black/30 border-white/10 text-white/60 hover:border-white/30 hover:text-white/80"
+                  ${
+                    activeCategory === cat.id
+                      ? "bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 border-cyan-500/50 text-white shadow-lg shadow-cyan-500/20"
+                      : "bg-black/30 border-white/10 text-white/60 hover:border-white/30 hover:text-white/80"
                   }
                 `}
               >
@@ -324,156 +341,157 @@ export default function Skills() {
         </div>
       </motion.div>
 
+      {/* Orbital System */}
       <div className="relative z-10 container mx-auto px-4">
-        <div
-          className="relative flex items-center justify-center"
-          style={{ height: "650px" }}
-        >
-          <motion.div
-            className="orbital-system"
-            style={{
-              x: orbitalX,
-              y: orbitalY,
-              scale: orbitalScale,
-            }}
+        <div className="relative flex items-center justify-center">
+          {/* ✅ SOLO uno: systemRef */}
+          <div
+            ref={systemRef}
+            className="relative w-full max-w-[900px] aspect-square [height:clamp(320px,70vh,700px)]"
+            // ✅ size de nodos responsive
+            style={{ ["--node" as any]: "clamp(36px,4.5vw,48px)" }}
           >
-            <svg
-              className="orbit-svg"
-              viewBox="-350 -350 700 700"
-              style={{
-                position: "absolute",
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "900px",
-                height: "900px",
-                overflow: "visible",
-                pointerEvents: "none",
-              }}
-            >
-              <circle
-                cx="0"
-                cy="0"
-                r={orbitRadii[1]}
-                fill="none"
-                stroke="rgba(34,211,238,0.25)"
-                strokeWidth="1.5"
-              />
-              <circle
-                cx="0"
-                cy="0"
-                r={orbitRadii[2]}
-                fill="none"
-                stroke="rgba(139,92,246,0.25)"
-                strokeWidth="1.5"
-              />
-              <circle
-                cx="0"
-                cy="0"
-                r={orbitRadii[3]}
-                fill="none"
-                stroke="rgba(232,121,249,0.25)"
-                strokeWidth="1.5"
-              />
-            </svg>
-
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
-              className="z-20"
-              style={{
-                position: "absolute",
-                left: "50%",
-                top: "50%",
-                width: "96px",
-                height: "96px",
-                marginLeft: "-48px",
-                marginTop: "-48px",
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background:
-                  "linear-gradient(135deg, rgb(34, 211, 238), rgb(232, 121, 249))",
-                boxShadow:
-                  "0 0 40px rgba(34, 211, 238, 0.4), 0 0 80px rgba(232, 121, 249, 0.3)",
-              }}
+              className="absolute inset-0"
+              style={{ x: orbitalX, y: orbitalY, scale: orbitalScale }}
             >
-              <span className="text-3xl font-black text-white drop-shadow-lg">
-                YH
-              </span>
+              {/* ✅ SVG responsive */}
+              <svg
+                className="absolute inset-0"
+                viewBox="-350 -350 700 700"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  overflow: "visible",
+                  pointerEvents: "none",
+                }}
+              >
+                <circle
+                  cx="0"
+                  cy="0"
+                  r={orbitRadii[1]}
+                  fill="none"
+                  stroke="rgba(34,211,238,0.25)"
+                  strokeWidth="1.5"
+                />
+                <circle
+                  cx="0"
+                  cy="0"
+                  r={orbitRadii[2]}
+                  fill="none"
+                  stroke="rgba(139,92,246,0.25)"
+                  strokeWidth="1.5"
+                />
+                <circle
+                  cx="0"
+                  cy="0"
+                  r={orbitRadii[3]}
+                  fill="none"
+                  stroke="rgba(232,121,249,0.25)"
+                  strokeWidth="1.5"
+                />
+              </svg>
+
+              {/* Centro */}
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+                className="z-20"
+                style={{
+                  position: "absolute",
+                  left: "50%",
+                  top: "50%",
+                  width: "96px",
+                  height: "96px",
+                  marginLeft: "-48px",
+                  marginTop: "-48px",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background:
+                    "linear-gradient(135deg, rgb(34, 211, 238), rgb(232, 121, 249))",
+                  boxShadow:
+                    "0 0 40px rgba(34, 211, 238, 0.4), 0 0 80px rgba(232, 121, 249, 0.3)",
+                }}
+              >
+                <span className="text-3xl font-black text-white drop-shadow-lg">
+                  YH
+                </span>
+              </motion.div>
+
+              {/* Nodes */}
+              <AnimatePresence mode="sync" initial={false}>
+                {getSkillsByOrbit(1).map((skill, index, arr) => {
+                  const pos = getPositionOnOrbit(
+                    index,
+                    arr.length,
+                    orbitRadii[1],
+                    -Math.PI / 4
+                  );
+                  return (
+                    <SkillNode
+                      key={skill.name}
+                      skill={skill}
+                      position={pos}
+                      delay={index * 0.08}
+                      colorScheme="cyan"
+                      onHoverStart={() => setActiveSkill(skill)}
+                      onHoverEnd={() => setActiveSkill(null)}
+                      onClick={() => setActiveSkill(skill)}
+                    />
+                  );
+                })}
+
+                {getSkillsByOrbit(2).map((skill, index, arr) => {
+                  const pos = getPositionOnOrbit(
+                    index,
+                    arr.length,
+                    orbitRadii[2],
+                    Math.PI / 6
+                  );
+                  return (
+                    <SkillNode
+                      key={skill.name}
+                      skill={skill}
+                      position={pos}
+                      delay={0.3 + index * 0.06}
+                      colorScheme="mixed"
+                      onHoverStart={() => setActiveSkill(skill)}
+                      onHoverEnd={() => setActiveSkill(null)}
+                      onClick={() => setActiveSkill(skill)}
+                    />
+                  );
+                })}
+
+                {getSkillsByOrbit(3).map((skill, index, arr) => {
+                  const pos = getPositionOnOrbit(
+                    index,
+                    arr.length,
+                    orbitRadii[3],
+                    0
+                  );
+                  return (
+                    <SkillNode
+                      key={skill.name}
+                      skill={skill}
+                      position={pos}
+                      delay={0.5 + index * 0.04}
+                      colorScheme="fuchsia"
+                      onHoverStart={() => setActiveSkill(skill)}
+                      onHoverEnd={() => setActiveSkill(null)}
+                      onClick={() => setActiveSkill(skill)}
+                    />
+                  );
+                })}
+              </AnimatePresence>
             </motion.div>
-
-            <AnimatePresence mode="sync" initial={false}>
-              {getSkillsByOrbit(1).map((skill, index, arr) => {
-                const pos = getPositionOnOrbit(
-                  index,
-                  arr.length,
-                  orbitRadii[1],
-                  -Math.PI / 4
-                );
-                return (
-                  <SkillNode
-                    key={skill.name}
-                    skill={skill}
-                    position={pos}
-                    delay={index * 0.08}
-                    colorScheme="cyan"
-                    onHoverStart={() => setActiveSkill(skill)}
-                    onHoverEnd={() => setActiveSkill(null)}
-                    onClick={() => setActiveSkill(skill)}
-                  />
-                );
-              })}
-
-              {getSkillsByOrbit(2).map((skill, index, arr) => {
-                const pos = getPositionOnOrbit(
-                  index,
-                  arr.length,
-                  orbitRadii[2],
-                  Math.PI / 6
-                );
-                return (
-                  <SkillNode
-                    key={skill.name}
-                    skill={skill}
-                    position={pos}
-                    delay={0.3 + index * 0.06}
-                    colorScheme="mixed"
-                    onHoverStart={() => setActiveSkill(skill)}
-                    onHoverEnd={() => setActiveSkill(null)}
-                    onClick={() => setActiveSkill(skill)}
-                  />
-                );
-              })}
-
-              {getSkillsByOrbit(3).map((skill, index, arr) => {
-                const pos = getPositionOnOrbit(
-                  index,
-                  arr.length,
-                  orbitRadii[3],
-                  0
-                );
-                return (
-                  <SkillNode
-                    key={skill.name}
-                    skill={skill}
-                    position={pos}
-                    delay={0.5 + index * 0.04}
-                    colorScheme="fuchsia"
-                    onHoverStart={() => setActiveSkill(skill)}
-                    onHoverEnd={() => setActiveSkill(null)}
-                    onClick={() => setActiveSkill(skill)}
-                  />
-                );
-              })}
-            </AnimatePresence>
-          </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* Scroll Hint Indicator (solo en Skills) */}
+      {/* Scroll Hint Indicator */}
       {isSkillsActive && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -492,7 +510,6 @@ export default function Skills() {
             }}
           >
             <div className="flex flex-col gap-2 text-xs font-medium">
-              {/* ✅ Scroll ↑ = ZOOM */}
               <div className="flex items-center gap-2">
                 <svg
                   className="w-3 h-3"
@@ -501,12 +518,7 @@ export default function Skills() {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 15l7-7 7 7"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
                 </svg>
                 <span
                   className="bg-clip-text text-transparent"
@@ -519,7 +531,6 @@ export default function Skills() {
                 </span>
               </div>
 
-              {/* ✅ Scroll ↓ = DE-ZOOM */}
               <div className="flex items-center gap-2">
                 <svg
                   className="w-3 h-3"
@@ -528,12 +539,7 @@ export default function Skills() {
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
                 <span
                   className="bg-clip-text text-transparent"
@@ -550,6 +556,7 @@ export default function Skills() {
         </motion.div>
       )}
 
+      {/* Tooltip Card */}
       <AnimatePresence>
         {activeSkill && (
           <motion.div
@@ -576,17 +583,13 @@ export default function Skills() {
                 <div className="w-8 h-8 text-cyan-400">{activeSkill.icon}</div>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white">
-                  {activeSkill.name}
-                </h3>
+                <h3 className="text-lg font-bold text-white">{activeSkill.name}</h3>
                 <p className="text-xs text-cyan-400/80 uppercase tracking-wider">
                   {activeSkill.category}
                 </p>
               </div>
             </div>
-            <p className="mt-3 text-sm text-white/70">
-              {activeSkill.description}
-            </p>
+            <p className="mt-3 text-sm text-white/70">{activeSkill.description}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -603,8 +606,6 @@ interface SkillNodeProps {
   onHoverEnd: () => void;
   onClick: () => void;
 }
-
-const NODE_SIZE = 48;
 
 function SkillNode({
   skill,
@@ -664,10 +665,11 @@ function SkillNode({
         position: "absolute",
         left: "50%",
         top: "50%",
-        width: `${NODE_SIZE}px`,
-        height: `${NODE_SIZE}px`,
-        marginLeft: `-${NODE_SIZE / 2}px`,
-        marginTop: `-${NODE_SIZE / 2}px`,
+        // ✅ tamaño responsive
+        width: "var(--node)",
+        height: "var(--node)",
+        marginLeft: "calc(var(--node) / -2)",
+        marginTop: "calc(var(--node) / -2)",
       }}
     >
       <div
@@ -691,9 +693,7 @@ function SkillNode({
           willChange: "transform",
         }}
       >
-        <div
-          className={`w-6 h-6 md:w-7 md:h-7 flex items-center justify-center ${colors.iconColor}`}
-        >
+        <div className={`w-6 h-6 md:w-7 md:h-7 flex items-center justify-center ${colors.iconColor}`}>
           {skill.icon}
         </div>
 
