@@ -26,7 +26,7 @@ const Projects = () => {
       title: 'Background Remover',
       icon: FileCode,
       description: 'AI-powered background removal tool using advanced computer vision techniques.',
-      tags: ['Python', 'Streamlit', 'rembg', 'ONNX Runtime', 'PIL', "API (Backend)"],
+      tags: ['Python', 'Streamlit', 'rembg', 'ONNX Runtime', 'PIL', 'API (Backend)'],
       demoUrl: 'https://yordinz.github.io/Background-Remover/',
       codeUrl: 'https://github.com/YordinZ/Background-Remover',
     },
@@ -57,7 +57,8 @@ const Projects = () => {
     {
       title: 'Data-Career',
       icon: Dice5,
-      description: 'End-to-end data analysis project featuring data cleaning, exploration, and interactive dashboards built with Streamlit, Pandas, and Plotly.',
+      description:
+        'End-to-end data analysis project featuring data cleaning, exploration, and interactive dashboards built with Streamlit, Pandas, and Plotly.',
       tags: ['Streamlit', 'Pandas', 'Plotly'],
       demoUrl: 'https://github.com/YordinZ/Data-Career',
       codeUrl: 'https://github.com/YordinZ/Data-Career',
@@ -68,7 +69,7 @@ const Projects = () => {
     <section
       ref={sectionRef}
       id="projects"
-      className="relative min-h-screen py-32 overflow-hidden scroll-mt-40"
+      className="relative min-h-screen py-32 overflow-hidden"
       style={{
         background: `
           radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 157, 255, 0.15), transparent 50%),
@@ -84,7 +85,10 @@ const Projects = () => {
       <div className="relative z-10 container mx-auto px-6">
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-5xl md:text-6xl font-bold text-white">
-            Recent <span className="bg-gradient-to-r from-cyan-400 to-fuchsia-500 bg-clip-text text-transparent">Projects</span>
+            Recent{' '}
+            <span className="bg-gradient-to-r from-cyan-400 to-fuchsia-500 bg-clip-text text-transparent">
+              Projects
+            </span>
           </h2>
           <div className="w-32 h-1 bg-gradient-to-r from-cyan-400 to-fuchsia-500 mx-auto rounded-full" />
         </div>
@@ -96,9 +100,7 @@ const Projects = () => {
               <div
                 key={index}
                 className="group relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-cyan-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20"
-                style={{
-                  animation: `fade-in-up 0.6s ease-out ${index * 0.1}s both`,
-                }}
+                style={{ animation: `fade-in-up 0.6s ease-out ${index * 0.1}s both` }}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-fuchsia-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -111,9 +113,7 @@ const Projects = () => {
                     <h3 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-white/60 leading-relaxed">
-                      {project.description}
-                    </p>
+                    <p className="text-white/60 leading-relaxed">{project.description}</p>
                   </div>
 
                   <div className="flex flex-wrap gap-2">
@@ -148,7 +148,6 @@ const Projects = () => {
                       <span>Code</span>
                     </a>
                   </div>
-
                 </div>
               </div>
             );
@@ -158,14 +157,8 @@ const Projects = () => {
 
       <style>{`
         @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </section>
