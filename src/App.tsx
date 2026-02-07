@@ -20,30 +20,44 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const scrollToHash = () => {
-      const id = window.location.hash.replace('#', '');
-      if (!id) return;
-
+    const run = () => {
       let tries = 0;
-      const maxTries = 40;
 
-      const timer = setInterval(() => {
+      const t = setInterval(() => {
         tries++;
+
+        const id = window.location.hash.replace("#", "");
+        if (!id) {
+          clearInterval(t);
+          return;
+        }
 
         const el = document.getElementById(id);
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          clearInterval(timer);
+          const header = document.querySelector("header");
+          const headerH = header ? header.getBoundingClientRect().height : 0;
+
+          const topGap = 16; // por tu header: top-4
+          const extra = 12;  // margen extra para que respire
+
+          const y =
+            el.getBoundingClientRect().top +
+            window.scrollY -
+            headerH -
+            topGap -
+            extra;
+
+          window.scrollTo({ top: y, behavior: "smooth" });
+          clearInterval(t);
         }
 
-        if (tries >= maxTries) clearInterval(timer);
+        if (tries >= 40) clearInterval(t);
       }, 100);
     };
 
-    scrollToHash();
-    window.addEventListener('hashchange', scrollToHash);
-
-    return () => window.removeEventListener('hashchange', scrollToHash);
+    run();
+    window.addEventListener("hashchange", run);
+    return () => window.removeEventListener("hashchange", run);
   }, []);
 
   return (
