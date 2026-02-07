@@ -26,7 +26,7 @@ const Projects = () => {
       title: 'Background Remover',
       icon: FileCode,
       description: 'AI-powered background removal tool using advanced computer vision techniques.',
-      tags: ['Python', 'OpenCV', 'Deep Learning'],
+      tags: ['Python', 'Streamlit', 'rembg', 'ONNX Runtime', 'PIL', "API (Backend)"],
       demoUrl: 'https://yordinz.github.io/Background-Remover/',
       codeUrl: 'https://github.com/YordinZ/Background-Remover',
     },
