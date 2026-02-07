@@ -68,7 +68,7 @@ const Projects = () => {
     <section
       ref={sectionRef}
       id="projects"
-      className="relative min-h-screen py-32 overflow-hidden"
+      className="relative min-h-screen py-32 overflow-hidden scroll-mt-28"
       style={{
         background: `
           radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 157, 255, 0.15), transparent 50%),

@@ -10,29 +10,36 @@ import Footer from './components/Footer';
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // ✨ efecto que ya tenías (mouse)
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    const scrollToHash = () => {
+      const id = window.location.hash.replace('#', '');
+      if (!id) return;
+
+      let tries = 0;
+      const maxTries = 40; // 40 * 100ms = 4s
+
+      const timer = setInterval(() => {
+        tries++;
+
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          clearInterval(timer);
+        }
+
+        if (tries >= maxTries) clearInterval(timer);
+      }, 100);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    // intenta al cargar
+    scrollToHash();
 
-  // ✅ NUEVO: respeta #projects al entrar desde otra página
-  useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    if (!hash) return;
+    // intenta si cambia el hash (click en navbar, etc.)
+    window.addEventListener('hashchange', scrollToHash);
 
-    const timeout = setTimeout(() => {
-      const el = document.getElementById(hash);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 200); // espera a que React renderice todo
-
-    return () => clearTimeout(timeout);
+    return () => {
+      window.removeEventListener('hashchange', scrollToHash);
+    };
   }, []);
 
   return (
