@@ -11,12 +11,21 @@ function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useEffect(() => {
     const scrollToHash = () => {
       const id = window.location.hash.replace('#', '');
       if (!id) return;
 
       let tries = 0;
-      const maxTries = 40; // 40 * 100ms = 4s
+      const maxTries = 40;
 
       const timer = setInterval(() => {
         tries++;
@@ -31,15 +40,10 @@ function App() {
       }, 100);
     };
 
-    // intenta al cargar
     scrollToHash();
-
-    // intenta si cambia el hash (click en navbar, etc.)
     window.addEventListener('hashchange', scrollToHash);
 
-    return () => {
-      window.removeEventListener('hashchange', scrollToHash);
-    };
+    return () => window.removeEventListener('hashchange', scrollToHash);
   }, []);
 
   return (
