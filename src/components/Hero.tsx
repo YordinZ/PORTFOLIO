@@ -130,7 +130,7 @@ const Hero = () => {
             </div>
 
             <p className="text-lg text-white/60 leading-relaxed max-w-xl">
-              Passionate about data-driven insights and animal welfare. Building solutions that make a difference.
+              Passionate about data-driven insights and building solutions, while continuously learning and growing to make a real difference.
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
