@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
+  // 🔹 Efecto del fondo (mouse)
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -17,6 +18,32 @@ function App() {
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // 🔹 NUEVO: ir al hash (#projects) al entrar desde otra página
+  useEffect(() => {
+    const go = () => {
+      const id = window.location.hash.slice(1);
+      if (!id) return;
+
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      // NO offset aquí, el CSS scroll-margin-top se encarga
+      el.scrollIntoView({ behavior: 'auto', block: 'start' });
+    };
+
+    // después del primer render
+    requestAnimationFrame(() => {
+      requestAnimationFrame(go);
+    });
+
+    // por si imágenes/fonts cambian el layout
+    window.addEventListener('load', go);
+
+    return () => {
+      window.removeEventListener('load', go);
+    };
   }, []);
 
   return (
@@ -31,6 +58,7 @@ function App() {
           )`,
         }}
       />
+
       <Header />
       <Hero />
       <Projects />
