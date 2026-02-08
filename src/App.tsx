@@ -10,7 +10,7 @@ import Footer from './components/Footer';
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // 🔹 Efecto del fondo (mouse)
+  // 🔹 Fondo interactivo con el mouse
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -20,28 +20,42 @@ function App() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // 🔹 NUEVO: ir al hash (#projects) al entrar desde otra página
+  // 🔹 ENTRAR DIRECTO AL HASH (#projects) DESDE OTRA PÁGINA
   useEffect(() => {
     const go = () => {
       const id = window.location.hash.slice(1);
       if (!id) return;
 
-      const el = document.getElementById(id);
-      if (!el) return;
+      let tries = 0;
+      const maxTries = 80; // reintenta hasta ~8s
 
-      // NO offset aquí, el CSS scroll-margin-top se encarga
-      el.scrollIntoView({ behavior: 'auto', block: 'start' });
+      const timer = window.setInterval(() => {
+        tries++;
+
+        const el = document.getElementById(id);
+        if (el) {
+          // El offset del header lo maneja el CSS (scroll-margin-top)
+          el.scrollIntoView({ behavior: 'auto', block: 'start' });
+          window.clearInterval(timer);
+        }
+
+        if (tries >= maxTries) {
+          window.clearInterval(timer);
+        }
+      }, 100);
     };
 
-    // después del primer render
-    requestAnimationFrame(() => {
-      requestAnimationFrame(go);
-    });
+    // al montar
+    go();
+
+    // por si cambia el hash
+    window.addEventListener('hashchange', go);
 
     // por si imágenes/fonts cambian el layout
     window.addEventListener('load', go);
 
     return () => {
+      window.removeEventListener('hashchange', go);
       window.removeEventListener('load', go);
     };
   }, []);
