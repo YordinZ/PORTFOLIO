@@ -1,11 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-  motion,
-  AnimatePresence,
-  animate,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Skill {
   name: string;
@@ -80,45 +74,19 @@ export default function Skills() {
     return { 1: r1, 2: r2, 3: r3 } as const;
   }, [systemSize]);
 
-  const [isSkillsActive, setIsSkillsActive] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
   const spiralRef = useRef<HTMLDivElement | null>(null);
-
-  // refs para scroll-control (sin rerenders)
-  const inSkillsRef = useRef(false);
-  const isZoomedRef = useRef(false);
-  const animatingRef = useRef(false);
-  const controlsRef = useRef<ReturnType<typeof animate> | null>(null);
 
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
   const [activeCategory, setActiveCategory] =
     useState<(typeof categories)[number]["id"]>("all");
+  // ✅ Sin zoom/scroll: sistema fijo y centrado
+  const orbitalX = 0;
+  const orbitalY = 0;
+  const orbitalScale = 1;
 
-  const progress = useMotionValue(0);
-
-  // 🔹 Desplazamiento responsive: cuando progress sube (zoom-in), el sistema SUBE (Y negativo)
-  const orbitShift = useMemo(() => {
-    // ~22% del tamaño del sistema, pero con límites para no romper móviles ni pantallas grandes
-    const raw = systemSize * 0.22;
-    return Math.max(70, Math.min(220, raw));
-  }, [systemSize]);
-
-  const orbitalX = useTransform(progress, [0, 1], [0, -100]);
-  const orbitalY = useTransform(progress, [0, 1], [0, -orbitShift]);
-  const orbitalScale = useTransform(progress, [0, 1], [1.5, 0.7]);
-
-  const spiralScale = useTransform(progress, [0, 1], [1.8, 0.8]);
-  const uiOpacity = useTransform(progress, [0, 0.5, 1], [0, 0.3, 1]);
-  const uiY = useTransform(progress, [0, 1], [30, 0]);
-
-  useEffect(() => {
-    const unsub = spiralScale.on("change", (v) => {
-      if (spiralRef.current) {
-        spiralRef.current.style.setProperty("--spiral-scale", v.toString());
-      }
-    });
-    return unsub;
-  }, [spiralScale]);
+  const uiOpacity = 1;
+  const uiY = 0;
 
   const particles = useMemo(() => {
     return Array.from({ length: 25 }, (_, i) => {
@@ -137,101 +105,27 @@ export default function Skills() {
     });
   }, []);
 
+  
   /**
-   * Wheel logic:
-   * - El scroll SOLO controla zoom
-   * - Categorías solo con click
-   * - Scroll arriba = ZOOM IN
-   * - Scroll abajo = ZOOM OUT (de-zoom)
+   * Active section detection (sin capturar scroll)
+   * - Sirve para estilos (ej: scrollbar glow) sin bloquear la rueda del mouse
    */
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
-    const ZOOM_MS = 650;
-    const ZOOM_OUT = 0;
-    const ZOOM_IN = 1;
-
-    const animateProgress = (to: number, ms: number, onComplete?: () => void) => {
-      animatingRef.current = true;
-
-      section.classList.toggle("skills--zoomed", to >= 0.999);
-
-      controlsRef.current?.stop();
-      controlsRef.current = animate(progress, to, {
-        duration: ms / 1000,
-        ease: [0.22, 1, 0.36, 1],
-        onComplete: () => {
-          animatingRef.current = false;
-          onComplete?.();
-        },
-      });
-    };
-
     const io = new IntersectionObserver(
       ([entry]) => {
         const active = entry.isIntersecting && entry.intersectionRatio >= 0.55;
-
-        inSkillsRef.current = active;
-        setIsSkillsActive(active);
-
+        
         document.documentElement.classList.toggle("skills-scrollbar", active);
       },
       { threshold: [0, 0.55, 0.9] }
     );
+
     io.observe(section);
-
-    const handleWheel = (e: WheelEvent) => {
-      if (!inSkillsRef.current) return;
-
-      if (animatingRef.current) {
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
-
-      const dir = Math.sign(e.deltaY);
-
-      // Scroll ↑ = Zoom IN
-      if (dir < 0) {
-        if (isZoomedRef.current) return;
-        e.preventDefault();
-        e.stopPropagation();
-        isZoomedRef.current = true;
-        animateProgress(ZOOM_IN, ZOOM_MS);
-        return;
-      }
-
-      // Scroll ↓ = Zoom OUT
-      if (dir > 0) {
-        if (!isZoomedRef.current) return;
-        e.preventDefault();
-        e.stopPropagation();
-        isZoomedRef.current = false;
-        animateProgress(ZOOM_OUT, ZOOM_MS);
-        return;
-      }
-    };
-
-    window.addEventListener("wheel", handleWheel, {
-      passive: false,
-      capture: true,
-    });
-
-    progress.set(ZOOM_OUT);
-    isZoomedRef.current = false;
-    section.classList.remove("skills--zoomed");
-
-    return () => {
-      io.disconnect();
-      setIsSkillsActive(false);
-      document.documentElement.classList.remove("skills-scrollbar");
-
-      window.removeEventListener("wheel", handleWheel, true);
-      controlsRef.current?.stop();
-      section.classList.remove("skills--zoomed");
-    };
-  }, [progress]);
+    return () => io.disconnect();
+  }, []);
 
   const filteredSkills =
     activeCategory === "all"
@@ -355,9 +249,9 @@ export default function Skills() {
           {/* ✅ SOLO uno: systemRef */}
           <div
             ref={systemRef}
-            className="relative w-full max-w-[900px] aspect-square [height:clamp(320px,70vh,700px)]"
+            className="relative w-full max-w-[900px] aspect-square [height:clamp(340px,66vh,680px)]"
             // ✅ size de nodos responsive
-            style={{ ["--node" as any]: "clamp(36px,4.5vw,48px)" }}
+            style={{ ["--node" as any]: "clamp(34px,4.2vw,48px)" }}
           >
             <motion.div
               className="absolute inset-0"
@@ -380,7 +274,7 @@ export default function Skills() {
                   r={orbitRadii[1]}
                   fill="none"
                   stroke="rgba(34,211,238,0.25)"
-                  strokeWidth="1.5"
+                  strokeWidth="1.8"
                 />
                 <circle
                   cx="0"
@@ -388,7 +282,7 @@ export default function Skills() {
                   r={orbitRadii[2]}
                   fill="none"
                   stroke="rgba(139,92,246,0.25)"
-                  strokeWidth="1.5"
+                  strokeWidth="1.8"
                 />
                 <circle
                   cx="0"
@@ -396,7 +290,7 @@ export default function Skills() {
                   r={orbitRadii[3]}
                   fill="none"
                   stroke="rgba(232,121,249,0.25)"
-                  strokeWidth="1.5"
+                  strokeWidth="1.8"
                 />
               </svg>
 
@@ -498,71 +392,6 @@ export default function Skills() {
           </div>
         </div>
       </div>
-
-      {/* Scroll Hint Indicator */}
-      {isSkillsActive && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ delay: 0.2, duration: 0.35 }}
-          className="fixed bottom-8 right-8 z-40 hidden md:flex flex-col items-center gap-2 pointer-events-none"
-        >
-          <div
-            className="px-4 py-3 rounded-xl backdrop-blur-md border"
-            style={{
-              background: "rgba(0, 0, 0, 0.5)",
-              borderColor: "rgba(34, 211, 238, 0.2)",
-              boxShadow:
-                "0 0 20px rgba(34, 211, 238, 0.1), 0 0 40px rgba(232, 121, 249, 0.05)",
-            }}
-          >
-            <div className="flex flex-col gap-2 text-xs font-medium">
-              <div className="flex items-center gap-2">
-                <svg
-                  className="w-3 h-3"
-                  style={{ color: "rgb(34, 211, 238)" }}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                </svg>
-                <span
-                  className="bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(to right, rgb(34, 211, 238), rgb(139, 92, 246))",
-                  }}
-                >
-                  Scroll ↑ Zoom
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <svg
-                  className="w-3 h-3"
-                  style={{ color: "rgb(232, 121, 249)" }}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-                <span
-                  className="bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(to right, rgb(139, 92, 246), rgb(232, 121, 249))",
-                  }}
-                >
-                  Scroll ↓ De-zoom
-                </span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
 
       {/* Tooltip Card */}
       <AnimatePresence>
@@ -690,7 +519,7 @@ function SkillNode({
           onHoverEnd();
         }}
         onClick={onClick}
-        className="relative cursor-pointer w-full h-full rounded-2xl bg-black/50 backdrop-blur-xl flex items-center justify-center"
+        className="relative cursor-pointer w-full h-full rounded-2xl bg-black/25 backdrop-blur-xl flex items-center justify-center"
         style={{
           border: `1px solid ${colors.border}`,
           boxShadow: colors.shadow,
