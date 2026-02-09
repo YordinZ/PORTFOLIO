@@ -96,9 +96,17 @@ export default function Skills() {
 
   const progress = useMotionValue(0);
 
+  // 🔹 Desplazamiento responsive: cuando progress sube (zoom-in), el sistema SUBE (Y negativo)
+  const orbitShift = useMemo(() => {
+    // ~22% del tamaño del sistema, pero con límites para no romper móviles ni pantallas grandes
+    const raw = systemSize * 0.22;
+    return Math.max(70, Math.min(220, raw));
+  }, [systemSize]);
+
   const orbitalX = useTransform(progress, [0, 1], [0, -100]);
-  const orbitalY = useTransform(progress, [0, 1], [0, 150]);
+  const orbitalY = useTransform(progress, [0, 1], [0, -orbitShift]);
   const orbitalScale = useTransform(progress, [0, 1], [1.5, 0.7]);
+
   const spiralScale = useTransform(progress, [0, 1], [1.8, 0.8]);
   const uiOpacity = useTransform(progress, [0, 0.5, 1], [0, 0.3, 1]);
   const uiY = useTransform(progress, [0, 1], [30, 0]);
