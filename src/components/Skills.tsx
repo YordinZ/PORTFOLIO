@@ -75,7 +75,6 @@ export default function Skills() {
   }, [systemSize]);
 
   const sectionRef = useRef<HTMLElement | null>(null);
-  const spiralRef = useRef<HTMLDivElement | null>(null);
 
   const [activeSkill, setActiveSkill] = useState<Skill | null>(null);
   const [activeCategory, setActiveCategory] =
@@ -105,7 +104,7 @@ export default function Skills() {
     });
   }, []);
 
-  
+
   /**
    * Active section detection (sin capturar scroll)
    * - Sirve para estilos (ej: scrollbar glow) sin bloquear la rueda del mouse
@@ -117,7 +116,7 @@ export default function Skills() {
     const io = new IntersectionObserver(
       ([entry]) => {
         const active = entry.isIntersecting && entry.intersectionRatio >= 0.55;
-        
+
         document.documentElement.classList.toggle("skills-scrollbar", active);
       },
       { threshold: [0, 0.55, 0.9] }
@@ -167,23 +166,31 @@ export default function Skills() {
         `,
       }}
     >
-      {/* Background spiral */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="spiral-container">
-          <div ref={spiralRef} className="spiral-zoom">
-            <div className="spiral spiral-1" />
-            <div className="spiral spiral-2" />
-            <div className="spiral spiral-3" />
-          </div>
-        </div>
-      </div>
 
-      {/* Neon lines */}
+      {/* ================= Orbital Aura (fondo premium) ================= */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute w-full h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent top-1/4 animate-pulse" />
+        {/* Aura principal */}
         <div
-          className="absolute w-full h-px bg-gradient-to-r from-transparent via-fuchsia-500/40 to-transparent bottom-1/4 animate-pulse"
-          style={{ animationDelay: "1s" }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+               w-[min(78vw,820px)] h-[min(78vw,820px)] rounded-full
+               blur-2xl opacity-70 animate-aura-breathe"
+          style={{
+            background:
+              "radial-gradient(circle at center, rgba(34,211,238,0.26) 0%, rgba(232,121,249,0.18) 35%, rgba(0,0,0,0) 70%)",
+            mixBlendMode: "screen",
+          }}
+        />
+
+        {/* Halo secundario (más fino) */}
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+               w-[min(62vw,640px)] h-[min(62vw,640px)] rounded-full
+               blur-xl opacity-50 animate-aura-drift"
+          style={{
+            background:
+              "radial-gradient(circle at center, rgba(232,121,249,0.22) 0%, rgba(34,211,238,0.12) 40%, rgba(0,0,0,0) 72%)",
+            mixBlendMode: "screen",
+          }}
         />
       </div>
 
@@ -229,10 +236,9 @@ export default function Skills() {
                 className={`
                   px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300
                   backdrop-blur-sm border
-                  ${
-                    activeCategory === cat.id
-                      ? "bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 border-cyan-500/50 text-white shadow-lg shadow-cyan-500/20"
-                      : "bg-black/30 border-white/10 text-white/60 hover:border-white/30 hover:text-white/80"
+                  ${activeCategory === cat.id
+                    ? "bg-gradient-to-r from-cyan-500/20 to-fuchsia-500/20 border-cyan-500/50 text-white shadow-lg shadow-cyan-500/20"
+                    : "bg-black/30 border-white/10 text-white/60 hover:border-white/30 hover:text-white/80"
                   }
                 `}
               >
