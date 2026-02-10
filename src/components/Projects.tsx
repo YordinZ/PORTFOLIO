@@ -18,7 +18,7 @@ type CodeLink =
 
 type Project = {
   title: string;
-  icon: LucideIcon; 
+  icon: LucideIcon;
   description: string;
   tags: string[];
   demoUrl: string;
@@ -79,8 +79,8 @@ const Projects = () => {
       {
         title: "Python React GUI Calculator",
         icon: Laptop,
-        description: "TENGO QUE CAMBIAR.",
-        tags: ["Streamlit", "Pandas", "Plotly"],
+        description: "Desktop calculator application built with Python and Tkinter, featuring a clean GUI and basic arithmetic operations.",
+        tags: ["Python", "Tkinter", "Desktop GUI"],
         demoUrl: "https://yordinz.github.io/Python-React-GUI-Calculator/",
         code: { kind: "single", url: "https://github.com/YordinZ/Python-React-GUI-Calculator" },
       },
@@ -261,9 +261,8 @@ const Projects = () => {
                         <span>Code</span>
                         <ChevronDown
                           size={16}
-                          className={`transition-transform duration-300 ${
-                            openMenuIndex === index ? "rotate-180" : "rotate-0"
-                          }`}
+                          className={`transition-transform duration-300 ${openMenuIndex === index ? "rotate-180" : "rotate-0"
+                            }`}
                         />
                       </button>
                     )}
