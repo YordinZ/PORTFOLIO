@@ -72,7 +72,7 @@ const Projects = () => {
         title: "Hand-Gesture Detection",
         icon: Code2,
         description: "Innovative AI experiment exploring prosthetic technology applications.",
-        tags: ["Machine Learning", "TensorFlow", "IoT"],
+        tags: ["Python", "OpenCV", "MediaPipe", "NumPy"],
         demoUrl: "https://yordinz.github.io/Hand-Gesture-Detection/",
         code: { kind: "single", url: "https://github.com/YordinZ/Hand-Gesture-Detection" },
       },
