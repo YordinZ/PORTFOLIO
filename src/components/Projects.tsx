@@ -98,7 +98,7 @@ const Projects = () => {
         description:
           "Turn-based console board game in Python featuring configurable rules via a text file, input validation, and detailed play logging.",
         tags: ["Python", "Game Logic", "Input Validation", "File Parsing"],
-        demoUrl: "https://github.com/YordinZ/Data-Career",
+        demoUrl: "https://yordinz.github.io/Data-Career/",
         code: { kind: "single", url: "https://github.com/YordinZ/Data-Career" },
       },
     ],
