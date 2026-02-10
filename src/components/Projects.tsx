@@ -1,8 +1,41 @@
-import { useEffect, useRef } from 'react';
-import { Code2, Laptop, FileCode, ExternalLink, DollarSign, Dice5, Github } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Code2,
+  Laptop,
+  FileCode,
+  ExternalLink,
+  DollarSign,
+  Dice5,
+  Github,
+  ChevronDown,
+  type LucideIcon,
+} from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+
+type CodeLink =
+  | { kind: "single"; url: string }
+  | { kind: "split"; frontend: string; backend: string };
+
+type Project = {
+  title: string;
+  icon: LucideIcon; 
+  description: string;
+  tags: string[];
+  demoUrl: string;
+  code: CodeLink;
+};
 
 const Projects = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Dropdown state 
+  const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
+  const [menuPos, setMenuPos] = useState<{ top: number; left: number; width: number }>({
+    top: 0,
+    left: 0,
+    width: 0,
+  });
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -13,57 +46,123 @@ const Projects = () => {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      section.style.setProperty('--mouse-x', `${x}px`);
-      section.style.setProperty('--mouse-y', `${y}px`);
+      section.style.setProperty("--mouse-x", `${x}px`);
+      section.style.setProperty("--mouse-y", `${y}px`);
     };
 
-    section.addEventListener('mousemove', handleMouseMove);
-    return () => section.removeEventListener('mousemove', handleMouseMove);
+    section.addEventListener("mousemove", handleMouseMove);
+    return () => section.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const projects = [
-    {
-      title: 'Background Remover',
-      icon: FileCode,
-      description: 'AI-powered background removal tool using advanced computer vision techniques.',
-      tags: ['Python', 'Streamlit', 'rembg', 'ONNX Runtime', 'PIL', 'API (Backend)'],
-      demoUrl: 'https://yordinz.github.io/Background-Remover/',
-      codeUrl: 'https://github.com/YordinZ/Background-Remover',
-    },
-    {
-      title: 'Hand-Gesture Detection',
-      icon: Code2,
-      description: 'Innovative AI experiment exploring prosthetic technology applications.',
-      tags: ['Machine Learning', 'TensorFlow', 'IoT'],
-      demoUrl: 'https://yordinz.github.io/Hand-Gesture-Detection/',
-      codeUrl: 'https://github.com/YordinZ/Hand-Gesture-Detection',
-    },
-    {
-      title: 'Python React GUI Calculator',
-      icon: Laptop,
-      description: 'TENGO QUE CAMBIAR.',
-      tags: ['Streamlit', 'Pandas', 'Plotly'],
-      demoUrl: 'https://yordinz.github.io/Python-React-GUI-Calculator/',
-      codeUrl: 'https://github.com/YordinZ/Python-React-GUI-Calculator',
-    },
-    {
-      title: 'CRC to USD Converter',
-      icon: DollarSign,
-      description: 'TENGO QUE CAMBIAR.',
-      tags: ['Streamlit', 'Pandas', 'Plotly'],
-      demoUrl: 'https://yordinz.github.io/CRC-to-USD-Converter/',
-      codeUrl: 'https://github.com/YordinZ/CRC-to-USD-Converter',
-    },
-    {
-      title: 'Data-Career',
-      icon: Dice5,
-      description:
-        'End-to-end data analysis project featuring data cleaning, exploration, and interactive dashboards built with Streamlit, Pandas, and Plotly.',
-      tags: ['Streamlit', 'Pandas', 'Plotly'],
-      demoUrl: 'https://github.com/YordinZ/Data-Career',
-      codeUrl: 'https://github.com/YordinZ/Data-Career',
-    },
-  ];
+  const projects: Project[] = useMemo(
+    () => [
+      {
+        title: "Background Remover",
+        icon: FileCode,
+        description: "AI-powered background removal tool using advanced computer vision techniques.",
+        tags: ["Python", "Streamlit", "rembg", "ONNX Runtime", "PIL", "API (Backend)"],
+        demoUrl: "https://yordinz.github.io/Background-Remover/",
+        code: {
+          kind: "split",
+          frontend: "https://github.com/YordinZ/Background-Remover",
+          backend: "https://github.com/YordinZ/background-remover-backend",
+        },
+      },
+      {
+        title: "Hand-Gesture Detection",
+        icon: Code2,
+        description: "Innovative AI experiment exploring prosthetic technology applications.",
+        tags: ["Machine Learning", "TensorFlow", "IoT"],
+        demoUrl: "https://yordinz.github.io/Hand-Gesture-Detection/",
+        code: { kind: "single", url: "https://github.com/YordinZ/Hand-Gesture-Detection" },
+      },
+      {
+        title: "Python React GUI Calculator",
+        icon: Laptop,
+        description: "TENGO QUE CAMBIAR.",
+        tags: ["Streamlit", "Pandas", "Plotly"],
+        demoUrl: "https://yordinz.github.io/Python-React-GUI-Calculator/",
+        code: { kind: "single", url: "https://github.com/YordinZ/Python-React-GUI-Calculator" },
+      },
+      {
+        title: "CRC to USD Converter",
+        icon: DollarSign,
+        description: "TENGO QUE CAMBIAR.",
+        tags: ["Streamlit", "Pandas", "Plotly"],
+        demoUrl: "https://yordinz.github.io/CRC-to-USD-Converter/",
+        code: { kind: "single", url: "https://github.com/YordinZ/CRC-to-USD-Converter" },
+      },
+      {
+        title: "Data-Career",
+        icon: Dice5,
+        description:
+          "End-to-end data analysis project featuring data cleaning, exploration, and interactive dashboards built with Streamlit, Pandas, and Plotly.",
+        tags: ["Streamlit", "Pandas", "Plotly"],
+        demoUrl: "https://github.com/YordinZ/Data-Career",
+        code: { kind: "single", url: "https://github.com/YordinZ/Data-Career" },
+      },
+    ],
+    []
+  );
+
+  const closeMenu = () => setOpenMenuIndex(null);
+
+  const positionMenuFromButton = (btn: HTMLButtonElement) => {
+    const rect = btn.getBoundingClientRect();
+    const gap = 10;
+    const desiredTop = rect.bottom + gap;
+    const desiredLeft = rect.left;
+
+    const menuWidth = Math.max(rect.width, 220);
+    const maxLeft = Math.max(12, window.innerWidth - menuWidth - 12);
+    const clampedLeft = Math.min(Math.max(12, desiredLeft), maxLeft);
+
+    const maxTop = Math.max(12, window.innerHeight - 180);
+    const clampedTop = Math.min(Math.max(12, desiredTop), maxTop);
+
+    setMenuPos({ top: clampedTop, left: clampedLeft, width: Math.max(rect.width, 220) });
+  };
+
+  const toggleSplitMenu = (index: number, buttonEl: HTMLButtonElement) => {
+    setOpenMenuIndex((prev) => (prev === index ? null : index));
+    positionMenuFromButton(buttonEl);
+  };
+
+  useEffect(() => {
+    if (openMenuIndex === null) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMenu();
+    };
+
+    const onPointerDown = (e: MouseEvent | PointerEvent) => {
+      const target = e.target as Node | null;
+      if (!target) return;
+
+      const menuEl = menuRef.current;
+      if (menuEl && menuEl.contains(target)) return;
+
+      closeMenu();
+    };
+
+    const onReposition = () => {
+      const idx = openMenuIndex;
+      const btn = document.querySelector<HTMLButtonElement>(`[data-code-split-btn="${idx}"]`);
+      if (btn) positionMenuFromButton(btn);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("resize", onReposition);
+    window.addEventListener("scroll", onReposition, true);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("resize", onReposition);
+      window.removeEventListener("scroll", onReposition, true);
+    };
+  }, [openMenuIndex]);
 
   return (
     <section
@@ -85,7 +184,7 @@ const Projects = () => {
       <div className="relative z-10 container mx-auto px-6">
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-5xl md:text-6xl font-bold text-white">
-            Recent{' '}
+            Recent{" "}
             <span className="bg-gradient-to-r from-cyan-400 to-fuchsia-500 bg-clip-text text-transparent">
               Projects
             </span>
@@ -96,6 +195,7 @@ const Projects = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {projects.map((project, index) => {
             const Icon = project.icon;
+
             return (
               <div
                 key={index}
@@ -138,15 +238,35 @@ const Projects = () => {
                       <span>Demo</span>
                     </a>
 
-                    <a
-                      href={project.codeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 hover:scale-105 transition-all"
-                    >
-                      <Github size={16} />
-                      <span>Code</span>
-                    </a>
+                    {project.code.kind === "single" ? (
+                      <a
+                        href={project.code.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 hover:scale-105 transition-all"
+                      >
+                        <Github size={16} />
+                        <span>Code</span>
+                      </a>
+                    ) : (
+                      <button
+                        type="button"
+                        data-code-split-btn={index}
+                        onClick={(e) => toggleSplitMenu(index, e.currentTarget)}
+                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 hover:scale-105 transition-all"
+                        aria-haspopup="menu"
+                        aria-expanded={openMenuIndex === index}
+                      >
+                        <Github size={16} />
+                        <span>Code</span>
+                        <ChevronDown
+                          size={16}
+                          className={`transition-transform duration-300 ${
+                            openMenuIndex === index ? "rotate-180" : "rotate-0"
+                          }`}
+                        />
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -154,6 +274,49 @@ const Projects = () => {
           })}
         </div>
       </div>
+
+      <AnimatePresence>
+        {openMenuIndex !== null && projects[openMenuIndex]?.code.kind === "split" && (
+          <motion.div
+            ref={menuRef}
+            key={`code-menu-${openMenuIndex}`}
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="fixed z-50"
+            style={{ top: menuPos.top, left: menuPos.left, width: menuPos.width }}
+          >
+            <div className="relative rounded-2xl border border-white/10 bg-[#0b0b12]/90 backdrop-blur-xl shadow-2xl shadow-cyan-500/10 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-fuchsia-500/10 opacity-60" />
+
+              <div className="relative p-2">
+                <a
+                  href={projects[openMenuIndex].code.frontend}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between gap-3 w-full px-3 py-2.5 rounded-xl text-white/90 hover:text-white hover:bg-white/5 transition-colors"
+                  onClick={closeMenu}
+                >
+                  <span className="text-sm font-semibold">Frontend</span>
+                  <ExternalLink size={16} className="text-white/70" />
+                </a>
+
+                <a
+                  href={projects[openMenuIndex].code.backend}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between gap-3 w-full px-3 py-2.5 rounded-xl text-white/90 hover:text-white hover:bg-white/5 transition-colors"
+                  onClick={closeMenu}
+                >
+                  <span className="text-sm font-semibold">Backend</span>
+                  <ExternalLink size={16} className="text-white/70" />
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <style>{`
         @keyframes fade-in-up {
