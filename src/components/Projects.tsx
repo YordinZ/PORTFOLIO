@@ -61,7 +61,7 @@ const Projects = () => {
         title: "Insightful Billing Dashboard",
         icon: BarChart3,
         description: "Interactive data analytics dashboard for intelligent billing systems. Features CSV upload, KPI tracking, trend analysis, and business insights visualization.",
-        tags: ["React", "TypeScript", "TailwindCSS", "Recharts", "Data Analytics"],
+        tags: ["Data Analytics", "TailwindCSS", "Neon", "Railway", "React", "TypeScript", "Recharts"],
         demoUrl: "https://yordinz.github.io/Dashboard/",
         code: { kind: "single", url: "https://github.com/YordinZ/Dashboard" },
       },
