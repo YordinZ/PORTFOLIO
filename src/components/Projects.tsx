@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  BarChart3,
   Code2,
   Laptop,
   FileCode,
@@ -56,6 +57,14 @@ const Projects = () => {
 
   const projects: Project[] = useMemo(
     () => [
+      {
+        title: "Insightful Billing Dashboard",
+        icon: BarChart3,
+        description: "Interactive data analytics dashboard for intelligent billing systems. Features CSV upload, KPI tracking, trend analysis, and business insights visualization.",
+        tags: ["React", "TypeScript", "TailwindCSS", "Recharts", "Data Analytics"],
+        demoUrl: "https://yordinz.github.io/Dashboard/",
+        code: { kind: "single", url: "https://github.com/YordinZ/Dashboard" },
+      },
       {
         title: "Background Remover",
         icon: FileCode,
