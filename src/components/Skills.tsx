@@ -37,6 +37,8 @@ const skills: Skill[] = [
   { name: "Docs", icon: <DocsIcon />, category: "Tools", description: "Documentación técnica clara", orbit: 3 },
   { name: "QA/QC", icon: <QAIcon />, category: "Tools", description: "Aseguramiento de calidad", orbit: 3 },
   { name: "Data Val.", icon: <DataValidationIcon />, category: "Data", description: "Validación e integridad de datos", orbit: 3 },
+  { name: "Neon", icon: <NeonIcon />, category: "Data", description: "Serverless PostgreSQL database for scalable cloud applications", orbit: 3 },
+  { name: "Railway", icon: <RailwayIcon />, category: "Dev", description: "Cloud platform for backend deployment and infrastructure management", orbit: 3 },
 ];
 
 const categories = [
@@ -749,6 +751,22 @@ function TailwindIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
       <path d="M12 6c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.3.73 1.9 1.33.97.97 2.09 2.09 4.6 2.09 2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.3-.73-1.9-1.33C15.63 7.12 14.51 6 12 6zm-5 6c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.3.73 1.9 1.33.97.97 2.09 2.09 4.6 2.09 2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.3-.73-1.9-1.33C10.63 13.12 9.51 12 7 12z" />
+    </svg>
+  );
+}
+
+function NeonIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+      <path d="M4 4h3v16H4zM9 4h3l5 8V4h3v16h-3l-5-8v8H9z" />
+    </svg>
+  );
+}
+
+function RailwayIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+      <path d="M4 17h16v2H4zM6 15V7h2v8H6zm5 0V5h2v10h-2zm5 0V9h2v6h-2z" />
     </svg>
   );
 }
