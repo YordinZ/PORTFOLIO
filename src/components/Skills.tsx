@@ -40,6 +40,7 @@ const skills: Skill[] = [
   { name: "Neon", icon: <NeonIcon />, category: "Data", description: "Serverless PostgreSQL database for scalable cloud applications", orbit: 3 },
   { name: "Railway", icon: <RailwayIcon />, category: "Dev", description: "Cloud platform for backend deployment and infrastructure management", orbit: 3 },
   { name: "Formspree", icon: <FormspreeIcon />, category: "Tools", description: "Form backend service for handling contact forms without a custom server", orbit: 3 },
+  { name: "Render", icon: <RenderIcon />, category: "Dev", description: "Cloud platform for deploying web services, APIs, and full-stack applications", orbit: 3 },
 ];
 
 const categories = [
@@ -776,6 +777,14 @@ function FormspreeIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
       <path d="M3 4h18v2H3zm0 4h18v12H3zM7 12h10v2H7z" />
+    </svg>
+  );
+}
+
+function RenderIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+      <path d="M4 4h8a6 6 0 0 1 0 12H8v4H4V4zm4 4v4h4a2 2 0 0 0 0-4H8z" />
     </svg>
   );
 }

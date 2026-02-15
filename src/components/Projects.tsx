@@ -96,9 +96,9 @@ const Projects = () => {
       {
         title: "CRC to USD Converter",
         icon: DollarSign,
-        description: "TENGO QUE CAMBIAR.",
-        tags: ["....", "...", "..."],
-        demoUrl: "#",
+        description: "Real-time currency converter that fetches USD→CRC rates from a Flask API deployed on Render and serves a responsive UI via GitHub Pages.",
+        tags: ["HTML", "CSS", "JavaScript", "Flask", "REST API", "Render"],
+        demoUrl: "https://yordinz.github.io/CRC-to-USD-Converter/",
         code: { kind: "single", url: "https://github.com/YordinZ/CRC-to-USD-Converter" },
       },
       {
