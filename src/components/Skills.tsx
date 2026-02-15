@@ -41,6 +41,7 @@ const skills: Skill[] = [
   { name: "Railway", icon: <RailwayIcon />, category: "Dev", description: "Cloud platform for backend deployment and infrastructure management", orbit: 3 },
   { name: "Formspree", icon: <FormspreeIcon />, category: "Tools", description: "Form backend service for handling contact forms without a custom server", orbit: 3 },
   { name: "Render", icon: <RenderIcon />, category: "Dev", description: "Cloud platform for deploying web services, APIs, and full-stack applications", orbit: 3 },
+  { name: "Hugging Face", icon: <HuggingFaceIcon />, category: "ML", description: "Open-source AI platform for machine learning models, transformers, and NLP applications", orbit: 3 },
 ];
 
 const categories = [
@@ -759,32 +760,83 @@ function TailwindIcon() {
 
 function NeonIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-      <path d="M4 4h3v16H4zM9 4h3l5 8V4h3v16h-3l-5-8v8H9z" />
+    <svg viewBox="0 0 24 24" className="w-full h-full">
+      <rect width="24" height="24" rx="4" fill="#0A0A0A" />
+      <path
+        d="M7 17V7h3l7 10V7h3v10h-3L10 7v10H7z"
+        fill="#00E599"
+      />
     </svg>
   );
 }
 
 function RailwayIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-      <path d="M4 17h16v2H4zM6 15V7h2v8H6zm5 0V5h2v10h-2zm5 0V9h2v6h-2z" />
+    <svg viewBox="0 0 24 24" className="w-full h-full">
+      {/* Fondo oscuro */}
+      <rect width="24" height="24" rx="4" fill="#0F0F0F" />
+
+      {/* Círculo gris */}
+      <circle cx="12" cy="12" r="7" fill="#2A2A2A" />
+
+      {/* Línea blanca horizontal */}
+      <rect x="8" y="11" width="8" height="2" rx="1" fill="#FFFFFF" />
     </svg>
   );
 }
 
 function FormspreeIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-      <path d="M3 4h18v2H3zm0 4h18v12H3zM7 12h10v2H7z" />
+    <svg viewBox="0 0 24 24" className="w-full h-full">
+      {/* Fondo oscuro */}
+      <rect width="24" height="24" rx="4" fill="#0F0F0F" />
+
+      {/* Barras rojas escalonadas */}
+      <rect x="7" y="7" width="10" height="2.5" rx="1" fill="#F43F5E" />
+      <rect x="7" y="11" width="7" height="2.5" rx="1" fill="#F43F5E" />
+      <rect x="7" y="15" width="5" height="2.5" rx="1" fill="#F43F5E" />
+    </svg>
+  );
+}
+function RenderIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-full h-full">
+      {/* Fondo oscuro */}
+      <rect width="24" height="24" rx="4" fill="#0F0F0F" />
+
+      {/* Forma blanca estilo Render */}
+      <path
+        d="M8 16V8h4v4h4v4H8z"
+        fill="#FFFFFF"
+      />
+
+      {/* Punto superior derecho */}
+      <circle cx="16" cy="8" r="2" fill="#FFFFFF" />
     </svg>
   );
 }
 
-function RenderIcon() {
+function HuggingFaceIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-      <path d="M4 4h8a6 6 0 0 1 0 12H8v4H4V4zm4 4v4h4a2 2 0 0 0 0-4H8z" />
+    <svg viewBox="0 0 24 24" className="w-full h-full">
+      {/* Fondo oscuro */}
+      <rect width="24" height="24" rx="4" fill="#0F0F0F" />
+
+      {/* Cara amarilla */}
+      <circle cx="12" cy="12" r="6" fill="#FACC15" />
+
+      {/* Ojos */}
+      <circle cx="10" cy="11" r="0.8" fill="#000000" />
+      <circle cx="14" cy="11" r="0.8" fill="#000000" />
+
+      {/* Sonrisa */}
+      <path
+        d="M9.5 14c1.2 1 3.8 1 5 0"
+        stroke="#000000"
+        strokeWidth="1"
+        fill="none"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
