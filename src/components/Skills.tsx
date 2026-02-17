@@ -10,38 +10,197 @@ interface Skill {
 }
 
 const skills: Skill[] = [
-  { name: "Python", icon: <PythonIcon />, category: "Dev", description: "Lenguaje principal para análisis de datos y ML", orbit: 1 },
-  { name: "SQL", icon: <SQLIcon />, category: "Data", description: "Consultas y gestión de bases de datos", orbit: 1 },
-  { name: "Pandas", icon: <PandasIcon />, category: "Data", description: "Manipulación y análisis de datos estructurados", orbit: 1 },
-  { name: "NumPy", icon: <NumPyIcon />, category: "Data", description: "Computación numérica y arrays multidimensionales", orbit: 1 },
+  // 🔵 Core Data & ML
+  { 
+    name: "Python", 
+    icon: <PythonIcon />, 
+    category: "Dev", 
+    description: "Primary programming language for data analysis, automation, and machine learning", 
+    orbit: 1 
+  },
+  { 
+    name: "SQL", 
+    icon: <SQLIcon />, 
+    category: "Data", 
+    description: "Database querying, optimization, and relational data management", 
+    orbit: 1 
+  },
+  { 
+    name: "Pandas", 
+    icon: <PandasIcon />, 
+    category: "Data", 
+    description: "Data manipulation, cleaning, and structured data analysis", 
+    orbit: 1 
+  },
+  { 
+    name: "NumPy", 
+    icon: <NumPyIcon />, 
+    category: "Data", 
+    description: "Numerical computing and multidimensional array operations", 
+    orbit: 1 
+  },
 
-  { name: "JavaScript", icon: <JavaScriptIcon />, category: "Dev", description: "Desarrollo web interactivo", orbit: 2 },
-  { name: "HTML", icon: <HTMLIcon />, category: "Dev", description: "Estructura y semántica web", orbit: 2 },
-  { name: "React", icon: <ReactIcon />, category: "Dev", description: "UI moderna con componentes reutilizables", orbit: 2 },
-  { name: "Tailwind", icon: <TailwindIcon />, category: "Dev", description: "CSS utility-first para diseño rápido y consistente", orbit: 2 },
+  // 🟢 Frontend Development
+  { 
+    name: "JavaScript", 
+    icon: <JavaScriptIcon />, 
+    category: "Dev", 
+    description: "Interactive web development and modern ES6+ features", 
+    orbit: 2 
+  },
+  { 
+    name: "HTML", 
+    icon: <HTMLIcon />, 
+    category: "Dev", 
+    description: "Semantic web structure and accessibility best practices", 
+    orbit: 2 
+  },
+  { 
+    name: "React", 
+    icon: <ReactIcon />, 
+    category: "Dev", 
+    description: "Modern UI development using reusable component architecture", 
+    orbit: 2 
+  },
+  { 
+    name: "Tailwind CSS", 
+    icon: <TailwindIcon />, 
+    category: "Dev", 
+    description: "Utility-first CSS framework for rapid and scalable UI design", 
+    orbit: 2 
+  },
 
-  { name: "Git", icon: <GitIcon />, category: "Tools", description: "Control de versiones", orbit: 2 },
-  { name: "GitHub", icon: <GitHubIcon />, category: "Tools", description: "Colaboración y repositorios", orbit: 2 },
-  { name: "Docker", icon: <DockerIcon />, category: "Tools", description: "Contenedores y despliegue", orbit: 2 },
+  // 🟡 Tools & DevOps
+  { 
+    name: "Git", 
+    icon: <GitIcon />, 
+    category: "Tools", 
+    description: "Version control and collaborative development workflows", 
+    orbit: 2 
+  },
+  { 
+    name: "GitHub", 
+    icon: <GitHubIcon />, 
+    category: "Tools", 
+    description: "Repository management, collaboration, and CI/CD integration", 
+    orbit: 2 
+  },
+  { 
+    name: "Docker", 
+    icon: <DockerIcon />, 
+    category: "Tools", 
+    description: "Containerization and environment consistency for deployment", 
+    orbit: 2 
+  },
 
-  { name: "Power BI", icon: <PowerBIIcon />, category: "Viz", description: "Dashboards y reportes interactivos", orbit: 2 },
-  { name: "Streamlit", icon: <StreamlitIcon />, category: "Viz", description: "Aplicaciones de datos interactivas", orbit: 2 },
+  // 🟣 Data Visualization
+  { 
+    name: "Power BI", 
+    icon: <PowerBIIcon />, 
+    category: "Viz", 
+    description: "Interactive dashboards and business intelligence reporting", 
+    orbit: 2 
+  },
+  { 
+    name: "Streamlit", 
+    icon: <StreamlitIcon />, 
+    category: "Viz", 
+    description: "Interactive data applications and rapid ML prototyping", 
+    orbit: 2 
+  },
 
-  { name: "EDA", icon: <EDAIcon />, category: "Data", description: "Análisis exploratorio de datos", orbit: 3 },
-  { name: "Feature Eng.", icon: <FeatureIcon />, category: "ML", description: "Creación y transformación de características", orbit: 3 },
-  { name: "ML Basics", icon: <MLIcon />, category: "ML", description: "Fundamentos de aprendizaje automático", orbit: 3 },
-  { name: "Statistics", icon: <StatsIcon />, category: "Data", description: "Análisis estadístico y probabilidad", orbit: 3 },
-  { name: "Validation", icon: <ValidationIcon />, category: "ML", description: "Evaluación y validación de modelos", orbit: 3 },
-  { name: "API", icon: <APIIcon />, category: "Dev", description: "Integración de servicios externos", orbit: 3 },
-  { name: "ETL", icon: <ETLIcon />, category: "Data", description: "Extracción, transformación y carga", orbit: 3 },
-  { name: "AtlassianIcon", icon: <AtlassianIcon />, category: "Tools", description: "Documentación técnica clara", orbit: 3 },
-  { name: "QA/QC", icon: <QAIcon />, category: "Tools", description: "Aseguramiento de calidad", orbit: 3 },
-  { name: "Data Val.", icon: <DataValidationIcon />, category: "Data", description: "Validación e integridad de datos", orbit: 3 },
-  { name: "Neon", icon: <NeonIcon />, category: "Data", description: "Serverless PostgreSQL database for scalable cloud applications", orbit: 3 },
-  { name: "Railway", icon: <RailwayIcon />, category: "Dev", description: "Cloud platform for backend deployment and infrastructure management", orbit: 3 },
-  { name: "Formspree", icon: <FormspreeIcon />, category: "Tools", description: "Form backend service for handling contact forms without a custom server", orbit: 3 },
-  { name: "Render", icon: <RenderIcon />, category: "Dev", description: "Cloud platform for deploying web services, APIs, and full-stack applications", orbit: 3 },
-  { name: "Hugging Face", icon: <HuggingFaceIcon />, category: "ML", description: "Open-source AI platform for machine learning models, transformers, and NLP applications", orbit: 3 },
+  // 🔴 Advanced & Cloud
+  { 
+    name: "Machine Learning Fundamentals", 
+    icon: <MLIcon />, 
+    category: "ML", 
+    description: "Supervised and unsupervised learning concepts and model evaluation", 
+    orbit: 3 
+  },
+  { 
+    name: "Statistics", 
+    icon: <StatsIcon />, 
+    category: "Data", 
+    description: "Probability theory, hypothesis testing, and statistical inference", 
+    orbit: 3 
+  },
+  { 
+    name: "Model Validation", 
+    icon: <ValidationIcon />, 
+    category: "ML", 
+    description: "Performance metrics, cross-validation, and model evaluation techniques", 
+    orbit: 3 
+  },
+  { 
+    name: "REST APIs", 
+    icon: <APIIcon />, 
+    category: "Dev", 
+    description: "Integration and development of RESTful services", 
+    orbit: 3 
+  },
+  { 
+    name: "Matplotlib", 
+    icon: <MatplotlibIcon />, 
+    category: "Data", 
+    description: "Data visualization and exploratory analysis using Python", 
+    orbit: 3 
+  },
+  { 
+    name: "Atlassian (Jira / Confluence)", 
+    icon: <AtlassianIcon />, 
+    category: "Tools", 
+    description: "Agile project management and technical documentation", 
+    orbit: 3 
+  },
+  { 
+    name: "QA/QC", 
+    icon: <QAIcon />, 
+    category: "Tools", 
+    description: "Quality assurance, testing methodologies, and process validation", 
+    orbit: 3 
+  },
+  { 
+    name: "PostgreSQL", 
+    icon: <PostgreSQLIcon />, 
+    category: "Data", 
+    description: "Relational database design, optimization, and data integrity", 
+    orbit: 3 
+  },
+  { 
+    name: "Neon", 
+    icon: <NeonIcon />, 
+    category: "Data", 
+    description: "Serverless PostgreSQL for scalable cloud-based applications", 
+    orbit: 3 
+  },
+  { 
+    name: "Railway", 
+    icon: <RailwayIcon />, 
+    category: "Dev", 
+    description: "Cloud platform for backend deployment and infrastructure management", 
+    orbit: 3 
+  },
+  { 
+    name: "Formspree", 
+    icon: <FormspreeIcon />, 
+    category: "Tools", 
+    description: "Form backend service for handling submissions without a custom server", 
+    orbit: 3 
+  },
+  { 
+    name: "Render", 
+    icon: <RenderIcon />, 
+    category: "Dev", 
+    description: "Cloud platform for deploying web services, APIs, and full-stack applications", 
+    orbit: 3 
+  },
+  { 
+    name: "Hugging Face", 
+    icon: <HuggingFaceIcon />, 
+    category: "ML", 
+    description: "Open-source AI ecosystem for transformers, NLP, and ML model deployment", 
+    orbit: 3 
+  },
 ];
 
 const categories = [
@@ -564,10 +723,7 @@ function SkillNode({
   );
 }
 
-/* ===========================
-   ICONOS
-   =========================== */
-
+/* ICONOS */
 function PythonIcon() {
   return (
     <svg
@@ -776,34 +932,20 @@ function HTMLIcon() {
   );
 }
 
-export function EDAIcon() {
+export function MLIcon() {
   return (
     <svg
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6 text-white" 
+      viewBox="0 0 122.88 111.48"
       fill="currentColor"
-      aria-label="EDA"
+      className="w-full h-full text-sky-400"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="Machine Learning"
       role="img"
     >
-      <path d="M7.9295 2c0.21365 0 0.39135 0.071835 0.533 0.2155 0.14165 0.143835 0.2125 0.322 0.2125 0.5345V11c0 0.2125 -0.07235 0.3906 -0.217 0.53425 -0.1445 0.14385 -0.32365 0.21575 -0.5375 0.21575 -0.21365 0 -0.39135 -0.0719 -0.533 -0.21575 -0.14165 -0.14365 -0.2125 -0.32175 -0.2125 -0.53425V2.75c0 -0.2125 0.07235 -0.390665 0.217 -0.5345 0.1445 -0.143665 0.32365 -0.2155 0.5375 -0.2155Zm4.15 -1c0.21365 0 0.39135 0.071835 0.533 0.2155 0.14165 0.143835 0.2125 0.322 0.2125 0.5345V11c0 0.2125 -0.07235 0.3906 -0.217 0.53425 -0.1445 0.14385 -0.32365 0.21575 -0.5375 0.21575 -0.21365 0 -0.39135 -0.0719 -0.533 -0.21575 -0.14165 -0.14365 -0.2125 -0.32175 -0.2125 -0.53425V1.75c0 -0.2125 0.07235 -0.390665 0.217 -0.5345 0.1445 -0.143665 0.32365 -0.2155 0.5375 -0.2155ZM15.5 16.45V3.75c0 -0.2125 0.07235 -0.390665 0.217 -0.5345 0.1445 -0.143665 0.32365 -0.2155 0.5375 -0.2155 0.21365 0 0.39135 0.071835 0.533 0.2155 0.14165 0.143835 0.2125 0.322 0.2125 0.5345v11.825l-1.5 0.875ZM4.5 16v3.25c0 0.63335 0.216665 1.16665 0.65 1.6 0.43335 0.43335 0.96665 0.65 1.6 0.65h7.175c0.16365 0 0.3171 -0.03335 0.46025 -0.1 0.14315 -0.06665 0.2814 -0.15835 0.41475 -0.275l5.875 -5.9 -7.45 4.35c-0.33335 0.18335 -0.68335 0.2375 -1.05 0.1625 -0.36665 -0.075 -0.66665 -0.2625 -0.9 -0.5625L8.875 16H4.5Zm2.25 7c-1.05 0 -1.9375 -0.3625 -2.6625 -1.0875C3.3625 21.1875 3 20.3019 3 19.25575V14.5h5.875c0.2375 0 0.4625 0.0531 0.675 0.15925 0.2125 0.10635 0.3875 0.25325 0.525 0.44075l2.35 3.15L17 15.575l2.75 -1.6c0.26665 -0.15 0.55415 -0.21665 0.8625 -0.2 0.30835 0.01665 0.57915 0.11665 0.8125 0.3l0.075 0.075c0.36665 0.28335 0.57085 0.64585 0.6125 1.0875 0.04165 0.44165 -0.10415 0.82915 -0.4375 1.1625l-5.8 5.8c-0.26665 0.26665 -0.56715 0.46665 -0.9015 0.6 -0.33435 0.13335 -0.68385 0.2 -1.0485 0.2H6.75ZM4.5 14.5H3V4.75c0 -0.2125 0.072335 -0.390665 0.217 -0.5345C3.3615 4.071835 3.540665 4 3.7545 4c0.213665 0 0.391335 0.071835 0.533 0.2155 0.141665 0.143835 0.2125 0.322 0.2125 0.5345V14.5Z" />
-    </svg>
-  );
-}
-
-function FeatureIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-      <path d="M12 2L4 6v12l8 4 8-4V6l-8-4zm0 2.5L17 7l-5 2.5L7 7l5-2.5zM6 8.5l5 2.5v7L6 15.5v-7zm12 0v7l-5 2.5v-7l5-2.5z" />
-    </svg>
-  );
-}
-
-function MLIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-      <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 3a2.5 2.5 0 110 5 2.5 2.5 0 010-5zm-4 9a2 2 0 110 4 2 2 0 010-4zm8 0a2 2 0 110 4 2 2 0 010-4z" />
-      <path d="M12 9.5c-.5 0-1 .1-1.5.3l-1.5 2.7c.5.3 1 .5 1.5.5h3c.5 0 1-.2 1.5-.5l-1.5-2.7c-.5-.2-1-.3-1.5-.3z" />
+      <path
+        fillRule="evenodd"
+        d="M50.21,38.57A17.17,17.17,0,1,1,33,55.74,17.17,17.17,0,0,1,50.21,38.57ZM91.31,94V85.28H67.46a44,44,0,0,0,5.64-6.17H94.38a3.09,3.09,0,0,1,3.08,3.07V94A9,9,0,1,1,91.31,94ZM89.16,30.71H75.51A44.78,44.78,0,0,0,71,24.55H86.09v-7a9,9,0,1,1,6.15-.06V27.64a3.07,3.07,0,0,1-3.08,3.07ZM122.88,15a9,9,0,1,0-12.65,8.25v18H80.12a43.4,43.4,0,0,1,1.27,6.16H113.3a3.09,3.09,0,0,0,3.07-3.08V23.67A9,9,0,0,0,122.88,15Zm-.15,49.93a9,9,0,0,0-17.49-3.08H80.88A42.08,42.08,0,0,1,79.14,68h26.1a9,9,0,0,0,17.49-3.07ZM49.56,105.3H46a6.13,6.13,0,0,1-6.12-6.11V92.93a38.11,38.11,0,0,1-10-3.78l-4.18,4.18a6.13,6.13,0,0,1-8.65,0L12,88.24a6.14,6.14,0,0,1,0-8.65l3.81-3.81a38,38,0,0,1-4.47-10.33H6.12A6.13,6.13,0,0,1,0,59.34v-7.2A6.13,6.13,0,0,1,6.12,46h5.12a38,38,0,0,1,4.44-10.44L12,31.88a6.14,6.14,0,0,1,0-8.64l5.09-5.09a6.13,6.13,0,0,1,8.65,0l4,4a38,38,0,0,1,10.13-3.87v-6A6.13,6.13,0,0,1,46,6.18h7.19A6.13,6.13,0,0,1,59.27,12V32.48A24.54,24.54,0,0,0,50.84,31c-.43,0-.86,0-1.28,0s-.85,0-1.27,0a24.61,24.61,0,1,0,0,49.21c.42,0,.85,0,1.27,0s.85,0,1.28,0a24.54,24.54,0,0,0,8.43-1.48V99.48a6.13,6.13,0,0,1-6.11,5.82Z"
+      />
     </svg>
   );
 }
@@ -813,7 +955,7 @@ function StatsIcon() {
     <svg
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6 text-white" 
+      className="h-6 w-6 text-white"
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -842,9 +984,14 @@ function StatsIcon() {
     </svg>
   );
 }
+
 function ValidationIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className="w-full h-full text-green-500"
+    >
       <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1 15l-4-4 1.41-1.41L11 14.17l6.59-6.59L19 9l-8 8z" />
     </svg>
   );
@@ -978,19 +1125,98 @@ function QAIcon() {
   );
 }
 
-function ETLIcon() {
+export function MatplotlibIcon({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-      <path d="M17 16l-4-4V8.82C14.16 8.4 15 7.3 15 6c0-1.66-1.34-3-3-3S9 4.34 9 6c0 1.3.84 2.4 2 2.82V12l-4 4H3v5h5v-3.05l4-4.2 4 4.2V21h5v-5h-4z" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 180 180"
+      className={className}
+      role="img"
+      aria-label="Matplotlib"
+    >
+      {/* Círculos base */}
+      <g stroke="gray" strokeWidth="2" fill="#FFF">
+        <circle cx="90" cy="90" r="88" />
+        <circle cx="90" cy="90" r="66" />
+        <circle cx="90" cy="90" r="44" />
+        <circle cx="90" cy="90" r="22" />
+        <path d="m90,2v176m62-26-124-124m124,0-124,124m150-62H2" />
+      </g>
+
+      {/* Secciones de colores */}
+      <g opacity=".8">
+        <path fill="#44C" d="m90,90h18a18,18 0 0,0 0-5z" />
+        <path fill="#BC3" d="m90,90 34-43a55,55 0 0,0-15-8z" />
+        <path fill="#D93" d="m90,90-16-72a74,74 0 0,0-31,15z" />
+        <path fill="#DB3" d="m90,90-58-28a65,65 0 0,0-5,39z" />
+        <path fill="#3BB" d="m90,90-33,16a37,37 0 0,0 2,5z" />
+        <path fill="#3C9" d="m90,90-10,45a46,46 0 0,0 18,0z" />
+        <path fill="#D73" d="m90,90 46,58a74,74 0 0,0 12-12z" />
+      </g>
     </svg>
   );
 }
 
-function DataValidationIcon() {
+export function PostgreSQLIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-      <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
-      <path d="M20 17l-1.41-1.41L16 18.17l-1.59-1.59L13 18l3 3 4-4z" />
+    <svg
+      viewBox="0 0 118.53 122.88"
+      className="w-full h-full"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="PostgreSQL"
+      role="img"
+    >
+      {/* Azul (logo) */}
+      <path
+        d="M113.53,75.55c-14.65,3.02-15.66-1.94-15.66-1.94c15.47-22.95,21.93-52.09,16.35-59.22 C99-5.06,72.65,4.14,72.21,4.38L72.06,4.4c-2.89-0.6-6.13-0.96-9.77-1.02c-6.63-0.11-11.66,1.74-15.47,4.63 c0,0-47.01-19.37-44.82,24.36c0.47,9.3,13.33,70.38,28.68,51.93c5.61-6.75,11.03-12.45,11.03-12.45c2.69,1.79,5.92,2.7,9.29,2.37 L51.26,74c-0.08,0.84-0.04,1.66,0.1,2.63c-3.95,4.42-2.79,5.19-10.7,6.82c-8,1.65-3.3,4.58-0.23,5.35 c3.72,0.93,12.32,2.25,18.14-5.89l-0.23,0.93c1.55,1.24,2.64,8.07,2.46,14.26c-0.18,6.19-0.3,10.44,0.92,13.76 s2.44,10.79,12.83,8.56c8.68-1.86,13.18-6.68,13.81-14.72c0.44-5.72,1.45-4.87,1.51-9.98l0.81-2.42c0.93-7.75,0.15-10.25,5.5-9.09 l1.3,0.11c3.94,0.18,9.09-0.63,12.11-2.04C116.08,79.27,119.95,74.22,113.53,75.55L113.53,75.55L113.53,75.55z"
+        fill="#336791"
+      />
+
+      {/* Blancos (detalles) */}
+      <path
+        d="M57.39,79.94c0.03-1,0.86-1.79,1.86-1.76s1.79,0.86,1.76,1.86c-0.21,7.43-0.17,14.88,0.1,20.84 c0.25,5.37,0.68,9.41,1.28,10.91c0.64,1.59,1.63,3.94,3.53,5.53c1.85,1.56,4.7,2.51,9.24,1.54c3.97-0.85,6.64-2.06,8.42-3.91 c1.76-1.83,2.76-4.42,3.38-8.04c0.46-2.64,1.09-7.25,1.66-11.84c0.72-5.74,1.38-11.54,1.52-13.41c0.07-1,0.94-1.75,1.94-1.67 c1,0.07,1.75,0.94,1.67,1.94c-0.14,1.82-0.8,7.69-1.55,13.6c-0.6,4.74-1.24,9.44-1.68,11.99c-0.75,4.33-2.02,7.52-4.35,9.94 c-2.32,2.41-5.57,3.93-10.28,4.94c-5.85,1.25-9.71-0.12-12.32-2.32c-2.57-2.16-3.79-5.02-4.56-6.95c-0.76-1.89-1.27-6.35-1.54-12.1 C57.21,95.02,57.18,87.47,57.39,79.94L57.39,79.94z"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M47.41,6.01c0.93,0.37,1.38,1.42,1.01,2.35c-0.37,0.93-1.42,1.38-2.35,1.01C45.95,9.32,1.65-8.78,3.7,32.1 c0.25,5.05,4.25,25.71,10.33,40.12c1.92,4.54,4.03,8.42,6.27,10.9c1.87,2.08,3.78,3.08,5.62,2.42c1.02-0.37,2.11-1.2,3.26-2.58 c5.63-6.77,10.75-12.12,10.77-12.13c0.69-0.72,1.83-0.75,2.55-0.06c0.72,0.69,0.75,1.83,0.06,2.55c-0.01,0.01-5.01,5.22-10.6,11.95 c-1.59,1.92-3.21,3.11-4.84,3.69c-3.46,1.23-6.64-0.21-9.52-3.41c-2.52-2.79-4.84-7.02-6.9-11.93C4.45,58.83,0.34,37.51,0.08,32.27 C-2.25-14.29,47.27,5.95,47.41,6.01L47.41,6.01z"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M73.1,5.73l-2.69-2.94c0.22-0.08,0.44-0.15,0.66-0.21c0.59-0.19,1.23-0.38,1.92-0.58 c1.01-0.3,2.49-0.69,4.3-1.04c9.03-1.75,26.65-2.7,38.26,12.14c3.28,4.19,3.01,14.56-0.38,26.84c-3,10.87-8.41,23.4-15.89,34.5 c-0.56,0.83-1.69,1.05-2.52,0.49s-1.05-1.69-0.49-2.52c7.26-10.77,12.5-22.92,15.41-33.44c3.1-11.22,3.59-20.37,1.02-23.65 C102.28,2.01,86.21,2.91,77.96,4.52C76.27,4.85,74.92,5.2,74,5.47L73.1,5.73L73.1,5.73z"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M99.49,72.87c0.02,0.05,0.03,0.1,0.04,0.15c0,0.01,0.62,3.24,13.53,0.58c1.83-0.38,3.13-0.3,3.97,0.11 c1.09,0.52,1.56,1.39,1.49,2.51c-0.04,0.68-0.36,1.41-0.89,2.14c-1.22,1.67-4.01,3.83-7.4,5.4c-2.54,1.18-6.41,1.97-9.96,2.17 c-2.09,0.12-4.09,0.04-5.68-0.28c-2-0.4-3.52-1.23-4.15-2.58c-0.17-0.36-0.27-0.75-0.29-1.17c-0.4-7.02,3.02-8.25,5.41-8.93 c-0.25-0.36-0.59-0.79-0.97-1.26c-1.21-1.51-2.76-3.45-3.99-6.42c-0.19-0.45-0.74-1.45-1.48-2.77c-3.13-5.61-9.29-16.67-8.08-24.22 c0.86-5.39,4.97-8.97,15.24-7.9l-0.1-0.3c-0.49-1.39-1.27-3.21-2.4-5.25c-4.48-8.16-14.25-19.54-31.6-19.82 c-26.47-0.43-25.6,32.95-25.6,33.04c0.02,1-0.78,1.82-1.78,1.84s-1.82-0.78-1.84-1.78c0-0.11-0.98-37.21,29.27-36.72 c19.1,0.31,29.82,12.77,34.72,21.69c1.22,2.22,2.09,4.24,2.64,5.81c0.62,1.76,0.85,3.14,0.75,3.75c-0.14,0.9-0.64,1.46-1.5,1.63 l-0.65,0.01c-9.42-1.51-12.98,0.8-13.58,4.56c-1.01,6.33,4.75,16.65,7.67,21.9c0.79,1.42,1.39,2.5,1.66,3.16 c1.04,2.51,2.4,4.21,3.46,5.55C98.39,70.68,99.17,71.66,99.49,72.87L99.49,72.87z M113.79,77.14c-9.57,1.98-14.03,0.53-16.08-1.03 c-0.28,0.09-0.58,0.17-0.9,0.26c-1.28,0.36-3.27,0.92-3.06,5.22c0.15,0.16,0.71,0.33,1.53,0.5c1.31,0.26,2.99,0.32,4.78,0.22 c3.13-0.18,6.5-0.85,8.65-1.85c2.21-1.03,4.06-2.27,5.2-3.35L113.79,77.14L113.79,77.14z"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M52.6,77.67c-0.74,0.83-1.35,1.6-1.87,2.26c-2.22,2.82-2.91,3.7-9.8,5.12c-1.24,0.26-2.08,0.51-2.6,0.76 c0.64,0.46,1.6,0.84,2.44,1.05c1.7,0.43,4.52,0.94,7.54,0.43c2.94-0.5,6.11-2.01,8.68-5.61c0.08-0.12,0.15-0.25,0.21-0.38 c0.26-0.63,0.2-1.42-0.06-2.17c-0.28-0.8-0.79-1.5-1.38-1.93c-0.14-0.1-0.28-0.18-0.43-0.24l-0.09-0.04 c-0.37-0.15-0.78-0.31-1.13-0.28C53.73,76.68,53.25,76.94,52.6,77.67L52.6,77.67L52.6,77.67z M47.88,77.68 c0.49-0.62,1.06-1.34,1.92-2.31c0.07-0.09,0.15-0.18,0.23-0.26c1.33-1.44,2.6-1.98,3.77-2.08c1.16-0.1,2.06,0.23,2.82,0.55 c0.03,0.01,0.06,0.02,0.1,0.04c0.39,0.16,0.77,0.38,1.14,0.64c1.19,0.85,2.17,2.2,2.7,3.67c0.54,1.53,0.63,3.24-0.01,4.76 c-0.16,0.38-0.36,0.74-0.61,1.09c-3.24,4.54-7.28,6.44-11.02,7.08c-3.67,0.63-7.01,0.02-9.03-0.48c-1.47-0.37-3.29-1.19-4.36-2.19 c-0.63-0.59-1.06-1.29-1.18-2.07c-0.14-0.93,0.14-1.83,0.99-2.63c0.82-0.77,2.34-1.47,4.85-1.99 C45.78,80.35,46.28,79.72,47.88,77.68L47.88,77.68z"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M52.79,76.1c0.15,0.99-0.53,1.92-1.52,2.06s-1.92-0.53-2.06-1.52c-0.04-0.24-0.06-0.48-0.08-0.73 c-0.6-0.02-1.19-0.06-1.77-0.15c-3.88-0.54-7.39-2.5-10.03-5.4c-2.61-2.86-4.37-6.64-4.78-10.86c-0.15-1.5-0.12-3.06,0.1-4.63 c0.89-6.34,0.55-12.01,0.38-14.95c-0.05-0.8-0.08-1.4-0.08-1.86c0.01-1.19,3-3.81,6.94-5.43c1.78-0.73,3.77-1.34,5.74-1.64 c2.08-0.31,4.18-0.28,6.07,0.31c2.96,0.93,5.31,3.12,6.21,7.31c3.25,15.01,0.34,21.46-1.93,26.51c-0.39,0.87-0.76,1.69-1.04,2.43 c-0.01,0.05-0.03,0.09-0.05,0.14c-0.95,2.56,0.44-1.19-0.28,0.72C53.48,71.49,52.49,74.13,52.79,76.1L52.79,76.1z M49.52,72.3 c0.39-1.61,1.03-3.31,1.71-5.14c0.54-1.44-0.87,2.33,0.26-0.72c0.02-0.05,0.04-0.1,0.06-0.15c0.35-0.93,0.73-1.76,1.12-2.64 c2.06-4.57,4.68-10.41,1.69-24.25c-0.58-2.69-1.99-4.07-3.75-4.62c-1.32-0.41-2.87-0.42-4.46-0.18c-1.7,0.26-3.4,0.78-4.92,1.4 c-2.67,1.09-4.69,2.01-4.69,2.09c0,0.26,0.03,0.85,0.08,1.64c0.18,3.05,0.53,8.96-0.4,15.66c-0.18,1.31-0.21,2.58-0.09,3.8 c0.33,3.4,1.75,6.45,3.86,8.76c2.08,2.28,4.83,3.83,7.85,4.25C48.4,72.26,48.96,72.3,49.52,72.3L49.52,72.3z"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M46.57,37.82c-0.08,0.59,1.09,2.18,2.61,2.39c1.52,0.21,2.83-1.03,2.91-1.62c0.08-0.59-1.09-1.25-2.61-1.46 C47.96,36.92,46.65,37.23,46.57,37.82L46.57,37.82L46.57,37.82z"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M47.17,37.9c-0.02,0.13,0.19,0.47,0.54,0.84c0.39,0.41,0.94,0.78,1.55,0.87l0.01,0 c0.6,0.08,1.16-0.12,1.58-0.41c0.39-0.26,0.63-0.54,0.66-0.7c0-0.03-0.15-0.12-0.4-0.26c-0.41-0.23-1.01-0.42-1.7-0.52l-0.02,0 c-0.68-0.09-1.31-0.07-1.76,0.04C47.35,37.83,47.17,37.88,47.17,37.9L47.17,37.9L47.17,37.9z M46.84,39.57 c-0.59-0.62-0.92-1.36-0.86-1.82l0-0.02c0.08-0.57,0.59-0.96,1.37-1.15c0.59-0.14,1.37-0.17,2.2-0.06c0.01,0,0.02,0,0.03,0 c0.84,0.12,1.59,0.36,2.12,0.66c0.7,0.39,1.09,0.92,1.01,1.48c-0.06,0.44-0.51,1.08-1.18,1.53c-0.63,0.43-1.49,0.74-2.42,0.61 l-0.01,0C48.18,40.68,47.39,40.15,46.84,39.57L46.84,39.57z"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M93.01,36.61c0.08,0.59-1.09,2.18-2.61,2.39c-1.53,0.21-2.83-1.03-2.91-1.62c-0.08-0.59,1.09-1.25,2.62-1.46 C91.62,35.71,92.92,36.02,93.01,36.61L93.01,36.61L93.01,36.61z"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M93.3,36.57L93.3,36.57c0.05,0.38-0.25,1.03-0.78,1.59c-0.51,0.54-1.25,1.03-2.09,1.14l-0.01,0 c-0.84,0.11-1.62-0.17-2.2-0.56c-0.6-0.4-0.99-0.95-1.05-1.32v0c-0.06-0.43,0.27-0.85,0.86-1.18c0.5-0.28,1.21-0.51,2.01-0.62 c0.8-0.11,1.55-0.08,2.11,0.05C92.81,35.82,93.24,36.13,93.3,36.57L93.3,36.57z M92.08,37.74c0.41-0.43,0.65-0.87,0.62-1.09 c-0.02-0.16-0.28-0.3-0.68-0.4h0c-0.49-0.12-1.16-0.14-1.89-0.04c-0.72,0.1-1.36,0.31-1.8,0.55c-0.36,0.2-0.57,0.41-0.55,0.57 c0.03,0.22,0.33,0.59,0.79,0.9c0.47,0.32,1.11,0.55,1.79,0.46l0.01,0C91.04,38.6,91.65,38.19,92.08,37.74L92.08,37.74z"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M96.65,32.59c-0.05-1,0.72-1.85,1.72-1.9c1-0.05,1.85,0.72,1.9,1.72c0.15,2.8-0.19,5.02-0.55,7.35 c-0.27,1.74-0.55,3.56-0.61,5.59c-0.06,1.93,0.19,4.07,0.46,6.27c0.7,5.79,1.44,11.99-2.86,18.4c-0.56,0.83-1.68,1.05-2.51,0.5 c-0.83-0.56-1.05-1.68-0.5-2.51c3.54-5.29,2.88-10.8,2.26-15.96c-0.28-2.3-0.55-4.54-0.47-6.8c0.07-2.34,0.36-4.21,0.64-6.02 C96.47,37.05,96.78,34.99,96.65,32.59L96.65,32.59z"
+        fill="#FFFFFF"
+      />
     </svg>
   );
 }
