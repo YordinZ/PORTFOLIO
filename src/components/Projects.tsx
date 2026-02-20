@@ -23,13 +23,14 @@ type Project = {
   description: string;
   tags: string[];
   demoUrl: string;
+  image: string; // ✅ agregado
   code: CodeLink;
 };
 
 const Projects = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Dropdown state 
+  // Dropdown state
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
   const [menuPos, setMenuPos] = useState<{ top: number; left: number; width: number }>({
     top: 0,
@@ -37,6 +38,9 @@ const Projects = () => {
     width: 0,
   });
   const menuRef = useRef<HTMLDivElement>(null);
+
+  // ✅ para que las rutas sirvan en local y GitHub Pages (subpath)
+  const ASSET_BASE = import.meta.env.BASE_URL;
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -60,9 +64,11 @@ const Projects = () => {
       {
         title: "Insightful Billing Dashboard",
         icon: BarChart3,
-        description: "Interactive data analytics dashboard for intelligent billing systems. Features CSV upload, KPI tracking, trend analysis, and business insights visualization.",
+        description:
+          "Interactive data analytics dashboard for intelligent billing systems. Features CSV upload, KPI tracking, trend analysis, and business insights visualization.",
         tags: ["Data Analytics", "TailwindCSS", "Neon", "Railway", "React", "TypeScript", "Recharts"],
         demoUrl: "https://yordinz.github.io/Dashboard/",
+        image: `${ASSET_BASE}assets/project-billing.jpg`,
         code: { kind: "single", url: "https://github.com/YordinZ/Dashboard" },
       },
       {
@@ -71,6 +77,7 @@ const Projects = () => {
         description: "AI-powered background removal tool using advanced computer vision techniques.",
         tags: ["Python", "Streamlit", "rembg", "ONNX Runtime", "PIL", "API (Backend)"],
         demoUrl: "https://yordinz.github.io/Background-Remover/",
+        image: `${ASSET_BASE}assets/project-bgremover.jpg`,
         code: {
           kind: "split",
           frontend: "https://github.com/YordinZ/Background-Remover",
@@ -83,22 +90,27 @@ const Projects = () => {
         description: "Innovative AI experiment exploring prosthetic technology applications.",
         tags: ["Python", "OpenCV", "MediaPipe", "NumPy"],
         demoUrl: "https://yordinz.github.io/Hand-Gesture-Detection/",
+        image: `${ASSET_BASE}assets/project-gesture.jpg`,
         code: { kind: "single", url: "https://github.com/YordinZ/Hand-Gesture-Detection" },
       },
       {
         title: "Python React GUI Calculator",
         icon: Laptop,
-        description: "Desktop calculator application built with Python and Tkinter, featuring a clean GUI and basic arithmetic operations.",
+        description:
+          "Desktop calculator application built with Python and Tkinter, featuring a clean GUI and basic arithmetic operations.",
         tags: ["Python", "Tkinter", "Desktop GUI"],
         demoUrl: "https://yordinz.github.io/Python-React-GUI-Calculator/",
+        image: `${ASSET_BASE}assets/project-calculator.jpg`,
         code: { kind: "single", url: "https://github.com/YordinZ/Python-React-GUI-Calculator" },
       },
       {
         title: "CRC to USD Converter",
         icon: DollarSign,
-        description: "Real-time currency converter that fetches USD→CRC rates from a Flask API deployed on Render and serves a responsive UI via GitHub Pages.",
+        description:
+          "Real-time currency converter that fetches USD→CRC rates from a Flask API deployed on Render and serves a responsive UI via GitHub Pages.",
         tags: ["HTML", "CSS", "JavaScript", "Flask", "REST API", "Render"],
         demoUrl: "https://yordinz.github.io/CRC-to-USD-Converter/",
+        image: `${ASSET_BASE}assets/project-currency.jpg`,
         code: { kind: "single", url: "https://github.com/YordinZ/CRC-to-USD-Converter" },
       },
       {
@@ -108,10 +120,11 @@ const Projects = () => {
           "Turn-based console board game in Python featuring configurable rules via a text file, input validation, and detailed play logging.",
         tags: ["Python", "Game Logic", "Input Validation", "File Parsing"],
         demoUrl: "https://yordinz.github.io/Data-Career/",
+        image: `${ASSET_BASE}assets/project-datacareer.jpg`,
         code: { kind: "single", url: "https://github.com/YordinZ/Data-Career" },
       },
     ],
-    []
+    [ASSET_BASE]
   );
 
   const closeMenu = () => setOpenMenuIndex(null);
@@ -203,80 +216,93 @@ const Projects = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {projects.map((project, index) => {
-            const Icon = project.icon;
 
             return (
               <div
-                key={index}
-                className="group relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:border-cyan-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20"
+                key={project.title ?? index}
+                className="group relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10 hover:border-cyan-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20"
                 style={{ animation: `fade-in-up 0.6s ease-out ${index * 0.1}s both` }}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-fuchsia-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* ✅ IMAGEN */}
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b12] via-transparent to-transparent opacity-80" />
+                </div>
 
-                <div className="relative space-y-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-fuchsia-600 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500">
-                    <Icon className="text-white" size={32} />
-                  </div>
+                <div className="p-10">
+                  <div className="relative space-y-6">
+                    <div className="space-y-3">
+                      <h3 className="text-2xl font-bold text-white">
+                        {project.title}
+                      </h3>
 
-                  <div className="space-y-3">
-                    <h3 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-white/60 leading-relaxed">{project.description}</p>
-                  </div>
+                      <p className="text-white/60 leading-relaxed line-clamp-2">
+                        {project.description}
+                      </p>
+                    </div>
 
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, i) => (
-                      <span
-                        key={i}
-                        className="px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-cyan-400"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1 text-xs font-medium bg-white/5 border border-white/10 rounded-full text-cyan-400"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
 
-                  <div className="flex gap-3 pt-4">
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-fuchsia-600 text-white font-semibold hover:shadow-lg hover:shadow-cyan-500/50 hover:scale-105 transition-all"
-                    >
-                      <ExternalLink size={16} />
-                      <span>Demo</span>
-                    </a>
-
-                    {project.code.kind === "single" ? (
+                    <div className="flex gap-4 pt-2">
                       <a
-                        href={project.code.url}
+                        href={project.demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 hover:scale-105 transition-all"
+                        className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-fuchsia-600 text-white font-semibold hover:shadow-lg hover:shadow-cyan-500/50 hover:scale-[1.02] transition-all"
                       >
-                        <Github size={16} />
-                        <span>Code</span>
+                        <ExternalLink size={16} />
+                        <span>Demo</span>
                       </a>
-                    ) : (
-                      <button
-                        type="button"
-                        data-code-split-btn={index}
-                        onClick={(e) => toggleSplitMenu(index, e.currentTarget)}
-                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 hover:scale-105 transition-all"
-                        aria-haspopup="menu"
-                        aria-expanded={openMenuIndex === index}
-                      >
-                        <Github size={16} />
-                        <span>Code</span>
-                        <ChevronDown
-                          size={16}
-                          className={`transition-transform duration-300 ${openMenuIndex === index ? "rotate-180" : "rotate-0"
-                            }`}
-                        />
-                      </button>
-                    )}
+
+                      {project.code.kind === "single" ? (
+                        <a
+                          href={project.code.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 hover:scale-[1.02] transition-all"
+                        >
+                          <Github size={16} />
+                          <span>Code</span>
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          data-code-split-btn={index}
+                          onClick={(e) => toggleSplitMenu(index, e.currentTarget as HTMLButtonElement)}
+                          className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 hover:scale-[1.02] transition-all"
+                          aria-haspopup="menu"
+                          aria-expanded={openMenuIndex === index}
+                        >
+                          <Github size={16} />
+                          <span>Code</span>
+                          <ChevronDown
+                            size={16}
+                            className={`transition-transform duration-300 ${openMenuIndex === index ? "rotate-180" : "rotate-0"
+                              }`}
+                          />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
+
+
+                {/* Hover glow */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-fuchsia-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             );
           })}
