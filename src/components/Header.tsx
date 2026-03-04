@@ -14,11 +14,16 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    setIsMobileMenuOpen(false);
+  };
+
   const navItems = [
-    { href: '#about', label: t.navAbout },
-    { href: '#projects', label: t.navProjects },
-    { href: '#skills', label: t.navSkills },
-    { href: '#contact', label: t.navContact },
+    { href: 'about', label: t.navAbout },
+    { href: 'projects', label: t.navProjects },
+    { href: 'skills', label: t.navSkills },
+    { href: 'contact', label: t.navContact },
   ];
 
   return (
@@ -32,17 +37,26 @@ const Header = () => {
           }`}
       >
         <div className="flex items-center justify-between">
-          <a href="#hero" className="font-semibold text-lg tracking-tight text-foreground hover:opacity-80 transition-opacity">
-            <span className="gradient-text">Yordin Herrera</span>
-          </a>
 
+          {/* ✅ Logo → scroll a hero */}
+          <button
+            onClick={() => scrollTo('hero')}
+            className="font-semibold text-lg tracking-tight text-foreground hover:opacity-80 transition-opacity"
+          >
+            <span className="gradient-text">Yordin Herrera</span>
+          </button>
+
+          {/* ✅ Nav desktop → scroll programático */}
           <ul className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => (
               <li key={item.href}>
-                <a href={item.href} className="relative group text-muted-foreground hover:text-foreground text-sm font-medium transition-colors duration-300">
+                <button
+                  onClick={() => scrollTo(item.href)}
+                  className="relative group text-muted-foreground hover:text-foreground text-sm font-medium transition-colors duration-300"
+                >
                   {item.label}
                   <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-to-r from-cyan-400 to-fuchsia-500 group-hover:w-full transition-all duration-300" />
-                </a>
+                </button>
               </li>
             ))}
           </ul>
@@ -69,15 +83,18 @@ const Header = () => {
           </button>
         </div>
 
+        {/* Nav mobile → scroll programático */}
         {isMobileMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 right-0 mt-2 bg-background/95 backdrop-blur-2xl rounded-2xl p-5 shadow-xl border border-border/40">
             <ul className="space-y-1">
               {navItems.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} onClick={() => setIsMobileMenuOpen(false)}
-                    className="block text-muted-foreground hover:text-foreground text-sm font-medium py-2.5 px-3 rounded-lg hover:bg-muted transition-all">
+                  <button
+                    onClick={() => scrollTo(item.href)}
+                    className="w-full text-left text-muted-foreground hover:text-foreground text-sm font-medium py-2.5 px-3 rounded-lg hover:bg-muted transition-all"
+                  >
                     {item.label}
-                  </a>
+                  </button>
                 </li>
               ))}
               <li className="pt-3 border-t border-border/40 flex items-center justify-between">
