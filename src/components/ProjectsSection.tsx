@@ -33,7 +33,7 @@ const ProjectsSection = () => {
       description: t.projBillingDesc,
       tags: ["Data Analytics", "React", "TypeScript", "Neon", "Recharts"],
       demoUrl: "https://yordinz.github.io/Dashboard/",
-      image: "/images/project-billing.jpg",
+      image: "/PORTFOLIO/images/project-billing.jpg",
       code: { kind: "single", url: "https://github.com/YordinZ/Dashboard" },
     },
     {
@@ -41,7 +41,7 @@ const ProjectsSection = () => {
       description: t.projBgDesc,
       tags: ["Python", "Streamlit", "rembg", "ONNX Runtime"],
       demoUrl: "https://yordinz.github.io/Background-Remover/",
-      image: "/images/project-bgremover.jpg",
+      image: "/PORTFOLIO/images/project-bgremover.jpg",
       code: { kind: "split", frontend: "https://github.com/YordinZ/Background-Remover", backend: "https://github.com/YordinZ/background-remover-backend" },
     },
     {
@@ -49,7 +49,7 @@ const ProjectsSection = () => {
       description: t.projGestureDesc,
       tags: ["Python", "OpenCV", "MediaPipe", "NumPy"],
       demoUrl: "https://yordinz.github.io/Hand-Gesture-Detection/",
-      image: "/images/project-gesture.jpg",
+      image: "/PORTFOLIO/images/project-gesture.jpg",
       code: { kind: "single", url: "https://github.com/YordinZ/Hand-Gesture-Detection" },
     },
     {
@@ -57,7 +57,7 @@ const ProjectsSection = () => {
       description: t.projCalcDesc,
       tags: ["Python", "Tkinter", "Desktop GUI"],
       demoUrl: "https://yordinz.github.io/Python-React-GUI-Calculator/",
-      image: "/images/project-calculator.jpg",
+      image: "/PORTFOLIO/images/project-calculator.jpg",
       code: { kind: "single", url: "https://github.com/YordinZ/Python-React-GUI-Calculator" },
     },
     {
@@ -65,7 +65,7 @@ const ProjectsSection = () => {
       description: t.projCurrDesc,
       tags: ["HTML", "CSS", "JavaScript", "Flask", "REST API"],
       demoUrl: "https://yordinz.github.io/CRC-to-USD-Converter/",
-      image: "/images/project-currency.jpg",
+      image: "/PORTFOLIO/images/project-currency.jpg",
       code: { kind: "single", url: "https://github.com/YordinZ/CRC-to-USD-Converter" },
     },
     {
@@ -73,7 +73,7 @@ const ProjectsSection = () => {
       description: t.projDataDesc,
       tags: ["Python", "Game Logic", "File Parsing"],
       demoUrl: "https://yordinz.github.io/Data-Career/",
-      image: "/images/project-datacareer.jpg",
+      image: "/PORTFOLIO/images/project-datacareer.jpg",
       code: { kind: "single", url: "https://github.com/YordinZ/Data-Career" },
     },
   ], [t]);

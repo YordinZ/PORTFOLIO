@@ -38,7 +38,7 @@ const Header = () => {
       >
         <div className="flex items-center justify-between">
 
-          {/* ✅ Logo → scroll a hero */}
+          {/* Logo → scroll a hero */}
           <button
             onClick={() => scrollTo('hero')}
             className="font-semibold text-lg tracking-tight text-foreground hover:opacity-80 transition-opacity"
@@ -46,7 +46,7 @@ const Header = () => {
             <span className="gradient-text">Yordin Herrera</span>
           </button>
 
-          {/* ✅ Nav desktop → scroll programático */}
+          {/* Nav desktop → scroll programático */}
           <ul className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => (
               <li key={item.href}>
