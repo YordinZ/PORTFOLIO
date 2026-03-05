@@ -5,6 +5,10 @@ const HeroSection = () => {
   const cvUrl = `${import.meta.env.BASE_URL}Yordin_Herrera_CV.pdf`;
   const { t } = useLanguage();
 
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section id="hero" className="section-page flex items-center justify-center bg-background">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -44,11 +48,13 @@ const HeroSection = () => {
                 <Download size={16} />
                 {t.downloadCV}
               </a>
-              <a href="#contact"
+              {/* scroll */}
+              <button
+                onClick={() => scrollTo('contact')}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border text-foreground font-semibold text-sm hover:bg-muted transition-colors">
                 <Mail size={16} />
                 {t.contact}
-              </a>
+              </button>
             </div>
 
             <div className="flex gap-4 justify-center lg:justify-start animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
@@ -65,9 +71,13 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <a href="#about" className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-foreground transition-colors animate-bounce">
+      {/* scroll */}
+      <button
+        onClick={() => scrollTo('about')}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted-foreground hover:text-foreground transition-colors animate-bounce"
+      >
         <ChevronDown size={28} />
-      </a>
+      </button>
     </section>
   );
 };
