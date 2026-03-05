@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -9,6 +10,16 @@ import ParticleNetwork from "@/components/ParticleNetwork";
 import CursorTrail from "@/components/CursorTrail";
 
 const Index = () => {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const section = params.get('section');
+    if (section) {
+      setTimeout(() => {
+        document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    }
+  }, []);
+
   return (
     <div className="bg-background min-h-screen relative">
       <ParticleNetwork />
