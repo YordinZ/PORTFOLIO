@@ -44,7 +44,6 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
   }
 
   ::-webkit-scrollbar {
@@ -73,7 +72,6 @@
 
   .section-page {
     @apply min-h-screen w-full relative overflow-hidden;
-    scroll-snap-align: start;
   }
 
   .reveal {
